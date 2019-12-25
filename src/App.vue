@@ -1,9 +1,5 @@
 <template>
   <div>
-    <div>
-      <router-link to="/">Home</router-link>
-      <router-link to="/dashboard">Dashboard</router-link>
-    </div>
     <router-view />
   </div>
 </template>
@@ -14,5 +10,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
