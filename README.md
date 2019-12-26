@@ -1,24 +1,5 @@
-# obscura7.5_frontend
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
+# ObscurA7.5_UI
+This project is built using Vue.js. 
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
