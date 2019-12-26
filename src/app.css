@@ -1,0 +1,105 @@
+/* 
+-------------------------------------------------------
+THEME
+
+Major bg : rgb(37, 38, 46)
+Minor Blue : #222437
+Major Text : #7E60F9
+Minor Text : #White
+-------------------------------------------------------
+*/
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,700i&display=swap");
+
+@font-face {
+  font-family: "HACKED";
+  src: url(./fonts/HACKED.ttf);
+}
+
+@font-face {
+  font-family: "gawds";
+  src: url(./fonts/timeburnerbold.ttf);
+}
+@font-face {
+  font-family: "SUBWAYTICKER";
+  src: url(./fonts/subway-ticker.regular.ttf);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1c1e2f;
+  color: #f42d57;
+  font-family: "Lato";
+  overflow-x: hidden;
+}
+.title {
+  font-size: 8em;
+  font-family: "HACKED";
+}
+.container {
+  width: 85%;
+  margin: auto;
+  text-align: center;
+  height: calc(100vh - 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.title-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  flex-direction: column;
+}
+.footer-content {
+  color: white;
+}
+.enter-button {
+  color: white;
+  background-color: #f42d57;
+  width: 160px;
+  margin: auto;
+  padding: 10px 10px;
+  border-radius: 3px;
+}
+.enter-button:hover {
+  cursor: pointer;
+  background: #f1446a;
+}
+.red-bar {
+  width: 100%;
+  height: 6px;
+  background: #f42d57;
+}
+.home-footer {
+  width: 100%;
+  height: 50px;
+  background: #f42d57;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gawds {
+  font-family: "gawds";
+  font-size: 1.3em;
+}
+
+@media (max-width: 800px) {
+  .title {
+    font-size: 3.5em;
+  }
+  .enter-button {
+    color: white;
+    background-color: #f42d57;
+    width: 120px;
+    margin: auto;
+    padding: 9px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+}

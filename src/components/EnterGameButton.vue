@@ -1,6 +1,7 @@
 <template>
   <div>
     <g-signin-button
+      class="enter-button"
       :params="googleSignInParams"
       @success="onSignInSuccess"
       @error="onSignInError"

@@ -1,7 +1,21 @@
 <template>
   <div>
-    <h1>Home</h1>
-    <EnterGameButton />
+    <div class="red-bar"></div>
+    <div class="container">
+      <div class="title-button">
+        <div>
+          <h1 class="title">ObscurA 7.5</h1>
+        </div>
+        <div>
+          <EnterGameButton />
+        </div>
+      </div>
+    </div>
+    <div class="home-footer">
+      <div class="footer-content">
+        Developed by <span class="gawds">gawds</span>
+      </div>
+    </div>
   </div>
 </template>
 
