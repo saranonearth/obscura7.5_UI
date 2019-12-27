@@ -4,6 +4,9 @@
     <div class="container">
       <div class="title-button">
         <div>
+          <img src="../images/logo.png" alt="yo" />
+        </div>
+        <div>
           <h1 class="title">ObscurA 7.5</h1>
         </div>
         <div>
@@ -13,7 +16,8 @@
     </div>
     <div class="home-footer">
       <div class="footer-content">
-        Developed by <span class="gawds">gawds</span>
+        Developed by
+        <span class="gawds">gawds</span>
       </div>
     </div>
   </div>

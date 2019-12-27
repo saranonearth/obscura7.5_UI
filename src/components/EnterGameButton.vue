@@ -5,9 +5,7 @@
       :params="googleSignInParams"
       @success="onSignInSuccess"
       @error="onSignInError"
-    >
-      Enter Game
-    </g-signin-button>
+    >Enter Game</g-signin-button>
   </div>
 </template>
 
@@ -24,7 +22,8 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
-      console.log(googleUser);
+      const token = googleUser.Zi.id_token;
+      this.$store.dispatch("AUTH", token);
     },
     onSignInError(error) {
       console.log("OH NOES", error);
