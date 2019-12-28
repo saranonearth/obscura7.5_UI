@@ -2,11 +2,13 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {
   Auth,
+  Onboard,
   getUser
 } from "../graphql";
 import {
   apolloClient
 } from "../main";
+
 
 
 Vue.use(Vuex);
@@ -16,6 +18,7 @@ const store = new Vuex.Store({
     user: null,
     levels: [],
     isAuth: false,
+    firstTime: localStorage.getItem("firstTime") || true,
     loading: true,
     token: localStorage.getItem("nara$obscura") || null,
     currentLevel: null
@@ -23,7 +26,8 @@ const store = new Vuex.Store({
   getters: {
     isAuth: state => state.isAuth,
     loading: state => state.loading,
-    user: state => state.user
+    user: state => state.user,
+    firstTime: state => state.firstTime
   },
   actions: {
     AUTH: async (context, token) => {
@@ -63,6 +67,29 @@ const store = new Vuex.Store({
     }) => {
       commit("LOGOUT")
 
+    },
+    ONBOARD: async ({
+      commit
+    }, {
+      gameName,
+      uniqueKey,
+      image
+    }) => {
+      try {
+        const res = await apolloClient.mutate({
+          mutation: Onboard,
+          variables: {
+            gameName,
+            uniqueKey,
+            image
+          }
+        })
+        console.log(res)
+        localStorage.setItem('firstTime', false)
+        commit("ON_BOARD", res.data.onBoard)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
@@ -79,7 +106,7 @@ const store = new Vuex.Store({
       localStorage.removeItem("nara$obscura");
       state.isAuth = false;
       state.user = null;
-      state.toke = null;
+      state.token = null;
       state.levels = [];
       state.currentLevel = null;
       state.loading = false;
@@ -87,6 +114,10 @@ const store = new Vuex.Store({
     },
     MAIN_LOADING: state => {
       state.loading = false;
+    },
+    ON_BOARD: (state, payload) => {
+      state.user = payload
+      state.firstTime = false
     }
   }
 });

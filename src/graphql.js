@@ -21,3 +21,19 @@ query{
   }
 }
 `
+
+export const Onboard = gql `
+mutation ($gameName: String!,$uniqueKey:String!,$image:String!){
+  onBoard(gameName: $gameName, uniqueKey:$uniqueKey, image:$image){
+    id
+    name
+    gameName
+    group
+    firstTime
+    image
+    uniqueKey
+  }
+}
+
+
+`

@@ -143,6 +143,7 @@ body {
 }
 
 .logout-icon {
+
   background-color: #7A00FF;
   border-radius: 50%;
   width: 40px;
@@ -152,7 +153,7 @@ body {
 
 .m-sidebar {
   width: 100%;
-  height: 13%;
+  height: 15%;
   position: fixed;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   bottom: 0;
@@ -171,11 +172,22 @@ body {
   padding-top: 20px;
 }
 
+.d-proimage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.23);
+  border: 2px #fff solid;
+}
+
 .flex-sidebar {
   display: flex;
   flex-direction: column;
   color: white;
+  margin-top: 30px;
 }
+
 
 .logout-icon:hover {
   background-color: rgb(179, 113, 250);
@@ -185,6 +197,7 @@ body {
 .center {
   width: 80%;
   margin: auto;
+  margin-top: 20px;
 }
 
 .s-container {
@@ -196,6 +209,8 @@ body {
 .s-icon {
   width: 35px;
   height: 35px;
+  fill: white !important;
+
 }
 
 .d-by {
@@ -218,9 +233,81 @@ body {
   margin-left: -50px;
 }
 
+.no-margin {
+  margin-left: 0;
+  height: 100vh;
+}
+
+.onboard-container {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  height: 50vh;
+}
+
+label {
+  font-size: 2em;
+}
+
+input {
+  border: none;
+  background: rgb(29, 30, 37);
+  width: 300px;
+  height: 50px;
+  margin-top: 16px;
+  margin-bottom: 20px;
+  color: #7A00FF;
+  font-size: 1.6em;
+  padding: 5px 10px;
+}
+
+button {
+  border: none;
+  background: #7A00FF;
+  color: white;
+  padding: 10px 20px;
+}
+
+button:hover {
+  background: rgb(165, 85, 250);
+}
+
+.no-padding {
+  padding-right: 0px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0;
+}
+
+.onboard-image {
+  width: 120px;
+  height: 120px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 50%;
+  border: 2px #7A00FF solid;
+  padding: 5px;
+}
+
+.on-gamename {
+  font-size: 1.6em;
+}
+
 @media (max-width: 800px) {
   .title {
     font-size: 3.5em;
+  }
+
+  input {
+    width: 200px;
+    height: 35px;
+    padding: 5px 10px;
+    font-size: 1em;
   }
 
   .no-mobile {
@@ -234,6 +321,11 @@ body {
 
   .no-desktop {
     display: block;
+  }
+
+
+  label {
+    font-size: 1em;
   }
 
   .enter-button {
@@ -263,6 +355,11 @@ body {
 
   .top-bar {
     padding: 15px;
+    justify-content: space-between;
+  }
+
+  .d-proimage {
+    border: 2px #7A00FF solid;
   }
 
   .d-container {
@@ -270,6 +367,7 @@ body {
   }
 
   .logout-icon {
+
     background-color: #7A00FF;
     border-radius: 50%;
     width: 30px;
@@ -284,4 +382,23 @@ body {
     margin-bottom: 0;
   }
 
+  .m-flex-sidebar {
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+  }
+
+  .d-footer-content {
+    padding-top: 0px;
+    padding-bottom: 5px;
+  }
+
+  .home-footer {
+    height: 20px;
+  }
 }

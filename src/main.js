@@ -56,5 +56,8 @@ new Vue({
   router,
   store,
   apolloProvider,
+  created() {
+    this.$store.dispatch('GET_USER')
+  },
   render: h => h(App)
 }).$mount("#app");

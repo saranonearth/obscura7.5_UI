@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
 import store from '../store'
+import Onboard from '../views/Onboard.vue'
 import Notfound from '../views/Notfound.vue'
 Vue.use(VueRouter)
 
@@ -19,6 +20,15 @@ const routes = [{
     name: 'dashboard',
     component: Dashboard,
     meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/onboard',
+    name: 'onboard',
+    component: Onboard,
+    meta: {
+      firstTime: true,
       requiresAuth: true
     }
   },
@@ -46,6 +56,12 @@ router.beforeEach((to, from, next) => {
     }
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
     if (!store.getters.isAuth) {
+      next();
+    } else {
+      next(from);
+    }
+  } else if (to.matched.some(record => record.meta.firstTime)) {
+    if (store.getters.firstTime) {
       next();
     } else {
       next(from);
