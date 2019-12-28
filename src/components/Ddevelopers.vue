@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>Levels</h1>
+    <h1>Developers</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Dlevels"
+  name: "Ddevelopers"
 };
 </script>
 

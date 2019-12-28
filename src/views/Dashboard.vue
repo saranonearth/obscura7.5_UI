@@ -11,19 +11,24 @@
             </div>
           </div>
           <div class="center">
-            <img class="s-icon" src="../images/home.png" alt="home" />
+            <img @click="clickHome" class="s-icon" src="../images/home.png" alt="home" />
             Home
           </div>
-          <div class="center">
+          <div @click="clickTeam" class="center">
             <img class="s-icon" src="../images/group.svg" alt="game-team" />
             GameTeam
           </div>
           <div class="center">
-            <img class="s-icon" src="../images/levels.svg" alt="levels" />
+            <img @click="clickLevels" class="s-icon" src="../images/levels.svg" alt="levels" />
             Levels
           </div>
           <div class="center">
-            <img class="s-icon" src="../images/team.svg" alt="obscura-team" />
+            <img
+              @click="clickDevelopers"
+              class="s-icon"
+              src="../images/team.svg"
+              alt="obscura-team"
+            />
             Developers
           </div>
         </div>
@@ -32,16 +37,16 @@
     <div class="m-sidebar no-desktop">
       <div class="m-flex-sidebar">
         <div>
-          <img class="s-icon" src="../images/home.png" alt="home" />
+          <img @click="clickHome" class="s-icon" src="../images/home.png" alt="home" />
         </div>
         <div>
-          <img class="s-icon" src="../images/group.svg" alt="game-team" />
+          <img @click="clickTeam" class="s-icon" src="../images/group.svg" alt="game-team" />
         </div>
         <div>
-          <img class="s-icon" src="../images/levels.svg" alt="levels" />
+          <img @click="clickLevels" class="s-icon" src="../images/levels.svg" alt="levels" />
         </div>
         <div>
-          <img class="s-icon" src="../images/team.svg" alt="obscura-team" />
+          <img @click="clickDevelopers" class="s-icon" src="../images/team.svg" alt="obscura-team" />
         </div>
       </div>
     </div>
@@ -57,7 +62,22 @@
           </div>
         </div>
         <h3 class="d-title">Obscura 7.5</h3>
-        <div></div>
+        <div v-if="view ==='home'">
+          <Dhome />
+        </div>
+        <div v-else-if="view ==='levels'">
+          <Dlevels />
+        </div>
+        <div v-else-if="view ==='developers'">
+          <Ddevelopers />
+        </div>
+        <div v-else-if="view ==='team'">
+          <Dteam />
+        </div>
+        <div v-else>
+          <h6>Gawdsh...</h6>
+          <p>Error 404</p>
+        </div>
       </div>
       <div class="bottom-bar">
         <div class="d-footer-content">
@@ -74,6 +94,10 @@
 </template>
 
 <script>
+import Dlevels from "../components/Dlevels";
+import Dhome from "../components/Dhome";
+import Ddevelopers from "../components/Ddevelopers";
+import Dteam from "../components/Dteam";
 export default {
   name: "Dashboard",
   data() {
@@ -84,6 +108,18 @@ export default {
   methods: {
     handleSignout() {
       this.$store.dispatch("LOGOUT");
+    },
+    clickHome() {
+      this.view = "home";
+    },
+    clickDevelopers() {
+      this.view = "developers";
+    },
+    clickTeam() {
+      this.view = "team";
+    },
+    clickLevels() {
+      this.view = "levels";
     }
   },
   computed: {
@@ -106,6 +142,12 @@ export default {
         this.$router.push("/");
       }
     }
+  },
+  components: {
+    Dlevels,
+    Dhome,
+    Dteam,
+    Ddevelopers
   }
 };
 </script>
