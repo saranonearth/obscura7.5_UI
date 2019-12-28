@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Dashboard from '../views/Dashboard.vue'
 import store from '../store'
+import Notfound from '../views/Notfound.vue'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -20,6 +21,10 @@ const routes = [{
     meta: {
       requiresAuth: true
     }
+  },
+  {
+    path: '*',
+    component: Notfound
   }
 ]
 
@@ -40,8 +45,9 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
     if (store.getters.isAuth) {
       next('/dashboard')
+      return
     }
-    next();
+    next()
   } else {
     next()
   }

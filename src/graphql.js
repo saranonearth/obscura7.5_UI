@@ -8,3 +8,16 @@ mutation ($token:String!){
         }
     }
 `
+
+export const getUser = gql `
+query{
+  getGamePlayer {
+    id
+    name
+    gameName
+    group
+    firstTime
+    image
+  }
+}
+`
