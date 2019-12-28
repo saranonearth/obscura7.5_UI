@@ -7,7 +7,7 @@ import {
 import {
   apolloClient
 } from "../main";
-import router from "../router";
+
 
 Vue.use(Vuex);
 
@@ -36,7 +36,7 @@ const store = new Vuex.Store({
         });
         console.log(res);
         context.commit("AUTH", res.data.auth.token);
-        router.push("/dashboard");
+
       } catch (error) {
         console.log(error);
       }
@@ -51,17 +51,18 @@ const store = new Vuex.Store({
         console.log(res)
         commit("GET_USER", res);
         commit("MAIN_LOADING");
-        router.push("/dashboard");
+
       } catch (error) {
         commit("MAIN_LOADING");
         commit("LOGOUT");
-        router.push("/");
+
       }
     },
     LOGOUT: ({
       commit
     }) => {
       commit("LOGOUT")
+
     }
   },
   mutations: {
@@ -82,7 +83,7 @@ const store = new Vuex.Store({
       state.levels = [];
       state.currentLevel = null;
       state.loading = false;
-      router.push('/')
+
     },
     MAIN_LOADING: state => {
       state.loading = false;

@@ -1,7 +1,8 @@
 <template>
   <div class="loading-screen">
-    <h1>Gawdsh..</h1>
-    <p>Error 404: Not Found</p>
+    <div>
+      <h1>Gawdsh..! 404 not found :p</h1>
+    </div>
   </div>
 </template>
 

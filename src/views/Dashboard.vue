@@ -4,18 +4,12 @@
     <div class="sidebar no-mobile">
       <div class="flex-sidebar">
         <div class="s-container">
-          <div>
-            User
-          </div>
+          <div>User</div>
           <div class="center">
             <img class="s-icon" src="../images/home.png" alt="home" />
           </div>
-          <div>
-            Team
-          </div>
-          <div>
-            Developers
-          </div>
+          <div>Team</div>
+          <div>Developers</div>
         </div>
       </div>
     </div>
@@ -51,6 +45,18 @@ export default {
     handleSignout() {
       console.log("lol");
       this.$store.dispatch("LOGOUT");
+    }
+  },
+  computed: {
+    isAuth() {
+      return this.$store.getters.isAuth;
+    }
+  },
+  watch: {
+    isAuth(value) {
+      if (value === false) {
+        this.$router.push("/");
+      }
     }
   }
 };

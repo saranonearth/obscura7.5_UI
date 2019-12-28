@@ -34,24 +34,25 @@ const router = new VueRouter({
   routes
 })
 
+
 router.beforeEach((to, from, next) => {
-  console.log(store.getters.isAuth)
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isAuth) {
-      next()
-      return
+    if (!store.getters.isAuth) {
+      next({
+        path: '/'
+      });
+    } else {
+      next();
     }
-    next('/')
   } else if (to.matched.some(record => record.meta.requiresGuest)) {
-    if (store.getters.isAuth) {
-      next('/dashboard')
-      return
+    if (!store.getters.isAuth) {
+      next();
+    } else {
+      next(from);
     }
-    next()
   } else {
-    next()
+    next();
   }
 })
-
 
 export default router

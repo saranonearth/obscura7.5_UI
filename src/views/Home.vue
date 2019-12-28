@@ -29,6 +29,18 @@ export default {
   name: "Home",
   components: {
     EnterGameButton
+  },
+  computed: {
+    isAuth() {
+      return this.$store.getters.isAuth;
+    }
+  },
+  watch: {
+    isAuth(value) {
+      if (value === true) {
+        this.$router.push("/dashboard");
+      }
+    }
   }
 };
 </script>
