@@ -65,3 +65,33 @@ mutation ($teamName:String!,$bio:String!,$uniqueKey:String!,$image:String!){
   }
 }
 `
+
+export const getGameTeam = gql `
+query ($teamId:String!){
+  getGameTeam(teamId:$teamId){
+    id
+    teamName
+    image
+    levelsSolved
+    curlevel{
+      level
+      levelNo
+    }
+    members{
+      player{
+        gameName
+        image
+        id
+      }
+      solvedLevels{
+        level
+      }
+      levelsSolved
+    }
+    invitations{
+      player
+    }
+    bio
+  }
+}
+`

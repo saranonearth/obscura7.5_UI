@@ -54,8 +54,8 @@
       <div class="d-container">
         <div class="top-bar">
           <div class="no-desktop" style="text-align:center;">
-            <img :src="User && User.image" alt="profileimage" class="d-proimage" />
-            <p>{{User && User.gameName}}</p>
+            <img :src="user && user.image" alt="profileimage" class="d-proimage" />
+            <p>{{user && user.gameName}}</p>
           </div>
           <div @click="handleSignout">
             <img class="logout-icon" src="../images/logout.png" alt="logout" />

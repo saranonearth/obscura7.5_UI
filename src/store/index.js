@@ -4,7 +4,8 @@ import {
   Auth,
   Onboard,
   getUser,
-  createTeam
+  createTeam,
+  getGameTeam
 } from "../graphql";
 import {
   apolloClient
@@ -36,7 +37,8 @@ const store = new Vuex.Store({
     user: state => state.user,
     firstTime: state => state.firstTime,
     team: state => state.team,
-    curLevel: state => state.curLevel
+    curLevel: state => state.curLevel,
+    group: state => state.user.group
   },
   actions: {
     AUTH: async (context, token) => {
@@ -123,6 +125,25 @@ const store = new Vuex.Store({
       } catch (error) {
         console.log(error)
       }
+    },
+    GET_GAME_TEAM: async ({
+        commit
+      },
+      teamId
+    ) => {
+
+      try {
+        const res = await apolloClient.query({
+          query: getGameTeam,
+          variables: {
+            teamId
+          }
+        })
+        console.log("CREATE_GAME_TEAM", res)
+        commit("GET_GAME_TEAM", res.data.getGameTeam)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
@@ -162,6 +183,9 @@ const store = new Vuex.Store({
       state.team = payload;
       state.currentLevel = payload.curlevel;
       state.user.group = payload.id;
+    },
+    GET_GAME_TEAM: (state, payload) => {
+      state.team = payload
     }
   }
 });

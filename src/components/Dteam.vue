@@ -7,7 +7,12 @@
         <label class="team-label" for="teamName">Choose a team avatar.</label>
         <div class="avatar-holder">
           <div v-for="img in images" :key="img.name">
-            <img class="avatar-list" :src="getImgUrl(img.name)" alt="pro-image" />
+            <img
+              @click="avatarSelect(img.name)"
+              :src="getImgUrl(img.name)"
+              alt="pro-image"
+              :class="image===img.name?'avatar-list selected':'avatar-list'"
+            />
           </div>
         </div>
         <form @submit.prevent="createTeam">
@@ -43,12 +48,12 @@ export default {
       teamName: "",
       uniqueKey: "",
       bio: "",
-      image: ""
+      image: "1"
     };
   },
   mounted() {
     if (this.$store.getters.user.group !== null) {
-      console.log("HEY");
+      this.$store.dispatch("GET_GAME_TEAM", this.$store.getters.group);
     }
   },
   computed: {
@@ -67,6 +72,10 @@ export default {
   methods: {
     getImgUrl(img) {
       return require(`../images/avatars/${img}.png`);
+    },
+    avatarSelect(value) {
+      this.image = value;
+      console.log(value);
     },
     createTeam() {
       const payload = {

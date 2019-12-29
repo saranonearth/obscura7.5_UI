@@ -24,7 +24,7 @@
     </div>
     <div class="home-footer bottom">
       <div class="footer-content">
-        Developed by{{view}}
+        Developed by
         <span class="gawds">gawds</span>
       </div>
     </div>
