@@ -3,31 +3,40 @@ import Vuex from "vuex";
 import {
   Auth,
   Onboard,
-  getUser
+  getUser,
+  createTeam
 } from "../graphql";
 import {
   apolloClient
 } from "../main";
-
+import config from '../config.json'
+import jwt from 'jsonwebtoken'
 
 
 Vue.use(Vuex);
+
+const token = localStorage.getItem("nara$obscura") || '';
+const tokenData = token ? jwt.verify(token, config.JWTKEY) : null
+const firstTime = tokenData ? tokenData.firstTime : true
 
 const store = new Vuex.Store({
   state: {
     user: null,
     levels: [],
     isAuth: false,
-    firstTime: localStorage.getItem("firstTime") || true,
+    firstTime: firstTime,
     loading: true,
     token: localStorage.getItem("nara$obscura") || null,
-    currentLevel: null
+    currentLevel: null,
+    team: null
   },
   getters: {
     isAuth: state => state.isAuth,
     loading: state => state.loading,
     user: state => state.user,
-    firstTime: state => state.firstTime
+    firstTime: state => state.firstTime,
+    team: state => state.team,
+    curLevel: state => state.curLevel
   },
   actions: {
     AUTH: async (context, token) => {
@@ -38,7 +47,7 @@ const store = new Vuex.Store({
             token
           }
         });
-        console.log(res);
+        console.log('AUTH', res);
         context.commit("AUTH", res.data.auth.token);
 
       } catch (error) {
@@ -84,9 +93,33 @@ const store = new Vuex.Store({
             image
           }
         })
-        console.log(res)
-        localStorage.setItem('firstTime', false)
+        console.log('ON BOARD', res)
         commit("ON_BOARD", res.data.onBoard)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    CREATE_TEAM: async ({
+      commit
+    }, {
+      teamName,
+      bio,
+      uniqueKey,
+      image
+    }) => {
+      try {
+
+        const res = await apolloClient.mutate({
+          mutation: createTeam,
+          variables: {
+            teamName,
+            bio,
+            uniqueKey,
+            image
+          }
+        })
+        console.log('CREATE TEAM', res)
+        commit("CREATE_TEAM", res.data.createTeam);
       } catch (error) {
         console.log(error)
       }
@@ -95,8 +128,12 @@ const store = new Vuex.Store({
   mutations: {
     AUTH: (state, payload) => {
       localStorage.setItem("nara$obscura", payload);
+      const tokenData = jwt.verify(payload, config.JWTKEY)
       state.token = payload;
       state.isAuth = true;
+      console.log("AUTH FS", tokenData.firstTime)
+      state.firstTime = tokenData.firstTime
+
     },
     GET_USER: (state, payload) => {
       state.user = payload.data.getGamePlayer;
@@ -116,8 +153,15 @@ const store = new Vuex.Store({
       state.loading = false;
     },
     ON_BOARD: (state, payload) => {
-      state.user = payload
+      state.user = payload.player
       state.firstTime = false
+      localStorage.removeItem('nara$obscura')
+      localStorage.setItem('nara$obscura', payload.token)
+    },
+    CREATE_TEAM: (state, payload) => {
+      state.team = payload;
+      state.currentLevel = payload.curlevel;
+      state.user.group = payload.id;
     }
   }
 });

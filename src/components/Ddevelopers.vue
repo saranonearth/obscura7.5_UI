@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Developers</h1>
+    <h1>Team obscurA</h1>
   </div>
 </template>
 

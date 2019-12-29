@@ -7,7 +7,7 @@
           <div>
             <div style="text-align:center;">
               <img :src="user && user.image" alt="profileimage" class="d-proimage" />
-              <p>{{user.gameName}}</p>
+              <p>{{User && user.gameName}}</p>
             </div>
           </div>
           <div class="center">
@@ -16,7 +16,7 @@
           </div>
           <div @click="clickTeam" class="center">
             <img class="s-icon" src="../images/group.svg" alt="game-team" />
-            GameTeam
+            <p>Team</p>
           </div>
           <div class="center">
             <img @click="clickLevels" class="s-icon" src="../images/levels.svg" alt="levels" />
@@ -29,7 +29,7 @@
               src="../images/team.svg"
               alt="obscura-team"
             />
-            Developers
+            <p>Team ObscurA</p>
           </div>
         </div>
       </div>
@@ -54,29 +54,31 @@
       <div class="d-container">
         <div class="top-bar">
           <div class="no-desktop" style="text-align:center;">
-            <img :src="user && user.image" alt="profileimage" class="d-proimage" />
-            <p>{{user.gameName}}</p>
+            <img :src="User && User.image" alt="profileimage" class="d-proimage" />
+            <p>{{User && User.gameName}}</p>
           </div>
           <div @click="handleSignout">
             <img class="logout-icon" src="../images/logout.png" alt="logout" />
           </div>
         </div>
         <h3 class="d-title">Obscura 7.5</h3>
-        <div v-if="view ==='home'">
-          <Dhome />
-        </div>
-        <div v-else-if="view ==='levels'">
-          <Dlevels />
-        </div>
-        <div v-else-if="view ==='developers'">
-          <Ddevelopers />
-        </div>
-        <div v-else-if="view ==='team'">
-          <Dteam />
-        </div>
-        <div v-else>
-          <h6>Gawdsh...</h6>
-          <p>Error 404</p>
+        <div class="view-holder">
+          <div v-if="view ==='home'">
+            <Dhome />
+          </div>
+          <div v-else-if="view ==='levels'">
+            <Dlevels />
+          </div>
+          <div v-else-if="view ==='developers'">
+            <Ddevelopers />
+          </div>
+          <div v-else-if="view ==='team'">
+            <Dteam />
+          </div>
+          <div v-else>
+            <h6>Gawdsh...</h6>
+            <p>Error 404</p>
+          </div>
         </div>
       </div>
       <div class="bottom-bar">
@@ -102,7 +104,8 @@ export default {
   name: "Dashboard",
   data() {
     return {
-      view: "home"
+      view: "home",
+      User: null
     };
   },
   methods: {
@@ -141,6 +144,9 @@ export default {
       if (value === false) {
         this.$router.push("/");
       }
+    },
+    user(value) {
+      this.User = value;
     }
   },
   components: {

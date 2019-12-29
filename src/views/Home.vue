@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <div class="home-footer">
+    <div class="home-footer mobile-footer-home">
       <div class="footer-content">
         Developed by
         <span class="gawds">gawds</span>

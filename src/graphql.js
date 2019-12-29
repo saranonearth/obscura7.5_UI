@@ -25,15 +25,43 @@ query{
 export const Onboard = gql `
 mutation ($gameName: String!,$uniqueKey:String!,$image:String!){
   onBoard(gameName: $gameName, uniqueKey:$uniqueKey, image:$image){
-    id
-    name
-    gameName
-    group
-    firstTime
-    image
-    uniqueKey
+    token
+    player{
+      id
+      firstTime
+      gameName
+      image
+    }
   }
 }
+`
 
-
+export const createTeam = gql `
+mutation ($teamName:String!,$bio:String!,$uniqueKey:String!,$image:String!){
+  createTeam(teamName:$teamName,uniqueKey:$uniqueKey,bio:$bio,image:$image){
+    id
+    teamName
+    image
+    bio
+    levelsSolved
+    invitations{
+      player
+    }
+    curlevel{
+      level
+      levelNo
+    }
+    members{
+      player{
+        id
+        gameName
+        image
+      }
+      solvedLevels{
+        level
+      }
+      levelsSolved
+    }
+  }
+}
 `

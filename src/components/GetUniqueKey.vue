@@ -1,10 +1,12 @@
 <template>
   <div>
-    <label for="uniquekey">Unique Key</label>
-    <br />
-    <input type="text" v-model="uk" />
-    <br />
-    <button @click="onNext(uk)">Next →</button>
+    <form @submit.prevent="onNext(uk)">
+      <label for="uniquekey">A line about your self.</label>
+      <br />
+      <input type="text" v-model="uk" required />
+      <br />
+      <button>Next →</button>
+    </form>
   </div>
 </template>
 
