@@ -133,7 +133,7 @@ body {
 .d-title {
   font-size: 5em;
   text-align: center;
-  padding-top: 30px;
+  padding-top: 10px;
   font-family: 'HACKED';
   letter-spacing: 1px;
 }
@@ -350,7 +350,149 @@ input:invalid {
   border: 2px solid #7A00FF;
 }
 
+.team-img {
+  width: 200px;
+  height: 200px;
+}
+
+.lvl-solved {
+  margin-top: 20px;
+  font-size: 1.8em;
+}
+
+.team-title {
+  margin-top: 20px;
+  font-size: 1.8em;
+  color: #15161B;
+  background: #7A00FF;
+}
+
+
+.your-team {
+  margin: 20px 0px;
+  font-weight: 800;
+  font-size: 2.2em;
+  color: #15161B;
+  background: #7A00FF;
+}
+
+.team-details {
+  margin-bottom: 200px;
+}
+
+.team-members {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.member img {
+  margin-top: 10px;
+  width: 120px;
+  height: 120px;
+}
+
+.admin {
+  background: #7A00FF;
+  color: #fff;
+  width: 100px;
+  margin: auto;
+  padding: 2px;
+  border-radius: 2px;
+}
+
+.member {
+
+  border: 3px solid #7A00FF;
+  padding: 20px;
+  margin: 10px
+}
+
+.mem-name {
+  font-size: 1.6em;
+  font-weight: 900;
+}
+
+.invitation {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border: 3px solid #7A00FF;
+  margin-top: 10px;
+  padding: 4px;
+  border-radius: 30px 0px 0px 30px;
+}
+
+.invitation img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-top: 2px;
+  margin-left: 2px;
+  border: 2px solid #7A00FF;
+  padding: 2px;
+}
+
+.i-p-name {
+  font-weight: 900;
+
+}
+
+.accept {
+  background: #7A00FF;
+  padding: 4px;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.accept:hover {
+  background-color: rgb(166, 84, 253);
+  cursor: pointer;
+}
+
+.holder-i {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.i-accept {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.i-name {
+  text-align: left;
+  margin-left: 15px;
+  margin-top: 4px;
+}
+
+/* .team-details {
+  background: rgb(30, 31, 37);
+  padding: 30px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  padding-top: 10px;
+  margin-top: 30px;
+} */
+
 @media (max-width: 800px) {
+  .team-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .your-team {
+    font-size: 1.8em;
+  }
+
+  .no-r {
+    margin-top: 20px;
+    font-size: 1.6em;
+  }
+
   .title {
     font-size: 3.5em;
   }

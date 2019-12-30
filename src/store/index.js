@@ -5,7 +5,8 @@ import {
   Onboard,
   getUser,
   createTeam,
-  getGameTeam
+  getGameTeam,
+  getinvitations
 } from "../graphql";
 import {
   apolloClient
@@ -29,7 +30,8 @@ const store = new Vuex.Store({
     loading: true,
     token: localStorage.getItem("nara$obscura") || null,
     currentLevel: null,
-    team: null
+    team: null,
+    invitations: []
   },
   getters: {
     isAuth: state => state.isAuth,
@@ -38,7 +40,8 @@ const store = new Vuex.Store({
     firstTime: state => state.firstTime,
     team: state => state.team,
     curLevel: state => state.curLevel,
-    group: state => state.user.group
+    group: state => state.user ? state.user.group : null,
+    invitations: state => state.invitations
   },
   actions: {
     AUTH: async (context, token) => {
@@ -144,6 +147,19 @@ const store = new Vuex.Store({
       } catch (error) {
         console.log(error)
       }
+    },
+    GET_INVITATIONS: async ({
+      commit
+    }) => {
+      try {
+        const res = await apolloClient.query({
+          query: getinvitations
+        })
+        console.log(res)
+        commit("GET_INVITATIONS", res.data.getTeamInvitations)
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
@@ -161,14 +177,13 @@ const store = new Vuex.Store({
       state.isAuth = true;
     },
     LOGOUT: state => {
-      localStorage.removeItem("nara$obscura");
       state.isAuth = false;
       state.user = null;
       state.token = null;
       state.levels = [];
       state.currentLevel = null;
       state.loading = false;
-
+      localStorage.removeItem("nara$obscura");
     },
     MAIN_LOADING: state => {
       state.loading = false;
@@ -186,6 +201,9 @@ const store = new Vuex.Store({
     },
     GET_GAME_TEAM: (state, payload) => {
       state.team = payload
+    },
+    GET_INVITATIONS: (state, payload) => {
+      state.invitations = payload
     }
   }
 });

@@ -92,6 +92,20 @@ query ($teamId:String!){
       player
     }
     bio
+    teamAdmin
   }
 }
+`
+
+export const getinvitations = gql `
+query{
+  getTeamInvitations{
+    player{
+      gameName
+      image
+      uniqueKey
+    }
+  }
+}
+
 `

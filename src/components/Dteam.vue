@@ -9,7 +9,7 @@
           <div v-for="img in images" :key="img.name">
             <img
               @click="avatarSelect(img.name)"
-              :src="getImgUrl(img.name)"
+              :src="getImageUrl(img.name)"
               alt="pro-image"
               :class="image===img.name?'avatar-list selected':'avatar-list'"
             />
@@ -35,25 +35,73 @@
         </form>
       </div>
     </div>
+    <div v-if="Team !==null">
+      <div class="team-details">
+        <div>
+          <p class="your-team">Your Team</p>
+        </div>
+        <div>
+          <img class="team-img" :src="getImageUrl(Team.image)" alt />
+        </div>
+        <h1 class="name-team">{{Team.teamName}}</h1>
+        <h4>{{Team.bio}}</h4>
+        <h3 class="lvl-solved">Levels Solved: {{Team.levelsSolved}}</h3>
+        <h3 class="team-title">Requests to join</h3>
+        <h4 class="no-r" v-if="invLength()===false">No requests.</h4>
+        <div v-for="i in Invitations" :key="i.player.gameName">
+          <div class="invitation">
+            <div>
+              <img :src="i.player.image" alt="i-player-img" />
+            </div>
+            <div class="holder-i">
+              <div class="i-name">
+                <div>
+                  <p class="i-p-name">{{i.player.gameName}}</p>
+                </div>
+                <div>
+                  <p>{{i.player.uniqueKey}}</p>
+                </div>
+              </div>
+              <div v-if="isAdmin(User.id)" class="i-accept">
+                <div class="accept">Accept</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="team-title">Members</h3>
+        <div class="team-members">
+          <div class="member" v-for="m in sort(Team.members)" :key="m.player.id">
+            <TeamMember :admin="isAdmin(m.player.id)" :member="m" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import TeamMember from "./TeamMember";
 import { images } from "../proimg";
 export default {
   name: "Dteam",
   data() {
     return {
       User: this.$store.getters.user,
+      Team: this.$store.getters.team,
       teamName: "",
       uniqueKey: "",
       bio: "",
-      image: "1"
+      image: "1",
+      Invitations: this.$store.getters.invitations
     };
+  },
+  components: {
+    TeamMember
   },
   mounted() {
     if (this.$store.getters.user.group !== null) {
       this.$store.dispatch("GET_GAME_TEAM", this.$store.getters.group);
+      this.$store.dispatch("GET_INVITATIONS");
     }
   },
   computed: {
@@ -62,20 +110,48 @@ export default {
     },
     images() {
       return images;
+    },
+    team() {
+      return this.$store.getters.team;
+    },
+    invitations() {
+      return this.$store.getters.invitations;
     }
   },
   watch: {
     user(value) {
       this.User = value;
+    },
+    team(value) {
+      this.Team = value;
+    },
+    invitations(value) {
+      this.Invitations = value;
     }
   },
   methods: {
-    getImgUrl(img) {
-      return require(`../images/avatars/${img}.png`);
+    sort(members) {
+      return members.slice().sort(function(a, b) {
+        return a.levelsSolved > b.levelsSolved ? 1 : -1;
+      });
+    },
+    invLength() {
+      if (this.Invitations.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    isAdmin(id) {
+      if (this.Team.teamAdmin === id) return true;
+      else return false;
     },
     avatarSelect(value) {
       this.image = value;
       console.log(value);
+    },
+    getImageUrl(value) {
+      return require(`../images/avatars/${value}.png`);
     },
     createTeam() {
       const payload = {
