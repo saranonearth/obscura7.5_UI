@@ -13,7 +13,7 @@
       </div>
       <div v-else class="levels-container">
         <div
-          @click="handleClick(level)"
+          @click="handleClick(level,index)"
           class="level"
           v-for="(level, index) in levels"
           :key="level.level"
@@ -47,8 +47,8 @@ export default {
     }
   },
   methods: {
-    handleClick(leveldata) {
-      this.$emit("level-selected", leveldata);
+    handleClick(leveldata, index) {
+      this.$emit("level-selected", { leveldata, index });
     }
   }
 };

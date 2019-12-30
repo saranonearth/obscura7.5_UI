@@ -76,7 +76,7 @@
             <Dteam :loading="loading" />
           </div>
           <div v-else-if="view ==='level'">
-            <Level :levelcontent="selLevel" />
+            <Level :levelcontent="selLevel" :index="index" />
           </div>
           <div v-else>
             <h6>Gawdsh...</h6>
@@ -111,7 +111,8 @@ export default {
       view: "home",
       User: null,
       loading: true,
-      selLevel: null
+      selLevel: null,
+      index: null
     };
   },
   methods: {
@@ -131,16 +132,9 @@ export default {
       this.view = "levels";
     },
     leveldata(e) {
-      this.selLevel = e;
-
-      if (this.$store.getters.levelData.find(l => l.id === e.level)) {
-        console.log("1");
-        return (this.view = "level");
-      } else {
-        console.log("2");
-        this.$store.dispatch("GET_LEVEL", e.level);
-        return (this.view = "level");
-      }
+      this.selLevel = e.leveldata;
+      this.index = e.index;
+      this.view = "level";
     }
   },
   computed: {

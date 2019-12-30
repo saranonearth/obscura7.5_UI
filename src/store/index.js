@@ -199,13 +199,16 @@ const store = new Vuex.Store({
         if (localStorage.getItem('lvld')) {
           const localData = localStorage.getItem('lvld')
           const levelData = JSON.parse(localData)
-          levelData.push(res.data.getLevel)
+          const newLevelData = [...levelData, {
+            ...res.data.getLevel
+          }]
           localStorage.removeItem('lvld')
-          localStorage.setItem('lvld', JSON.stringify(levelData))
+          localStorage.setItem('lvld', JSON.stringify(newLevelData))
           commit('GET_LEVEL', res.data.getLevel);
         } else {
-          let newLevelData = []
-          newLevelData.push(res.data.getLevel)
+          let newLevelData = [{
+            ...res.data.getLevel
+          }]
           localStorage.setItem('lvld', JSON.stringify(newLevelData))
           commit('GET_LEVEL', res.data.getLevel)
         }
@@ -262,7 +265,9 @@ const store = new Vuex.Store({
       state.levels = payload
     },
     GET_LEVEL: (state, payload) => {
-      state.levelData = state.levelData.push(payload)
+      state.levelData = [...state.levelData, {
+        ...payload
+      }]
     }
   }
 });
