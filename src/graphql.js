@@ -117,3 +117,13 @@ query{
     levelNo
   }
 }`
+
+export const getLevel = gql `
+query ($levelId:String!){
+   getLevel(levelId:$levelId){
+     data
+     rlevelNo
+     id
+  }
+}
+`

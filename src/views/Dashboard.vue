@@ -67,13 +67,16 @@
             <Dhome />
           </div>
           <div v-else-if="view ==='levels'">
-            <Dlevels :loading="loading" />
+            <Dlevels @level-selected="leveldata" :loading="loading" />
           </div>
           <div v-else-if="view ==='developers'">
             <Ddevelopers />
           </div>
           <div v-else-if="view ==='team'">
             <Dteam :loading="loading" />
+          </div>
+          <div v-else-if="view ==='level'">
+            <Level :levelcontent="selLevel" />
           </div>
           <div v-else>
             <h6>Gawdsh...</h6>
@@ -100,13 +103,15 @@ import Dlevels from "../components/Dlevels";
 import Dhome from "../components/Dhome";
 import Ddevelopers from "../components/Ddevelopers";
 import Dteam from "../components/Dteam";
+import Level from "../components/Level";
 export default {
   name: "Dashboard",
   data() {
     return {
       view: "home",
       User: null,
-      loading: true
+      loading: true,
+      selLevel: null
     };
   },
   methods: {
@@ -124,6 +129,18 @@ export default {
     },
     clickLevels() {
       this.view = "levels";
+    },
+    leveldata(e) {
+      this.selLevel = e;
+
+      if (this.$store.getters.levelData.find(l => l.id === e.level)) {
+        console.log("1");
+        return (this.view = "level");
+      } else {
+        console.log("2");
+        this.$store.dispatch("GET_LEVEL", e.level);
+        return (this.view = "level");
+      }
     }
   },
   computed: {
@@ -164,7 +181,8 @@ export default {
     Dlevels,
     Dhome,
     Dteam,
-    Ddevelopers
+    Ddevelopers,
+    Level
   }
 };
 </script>

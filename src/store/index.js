@@ -7,7 +7,8 @@ import {
   createTeam,
   getGameTeam,
   getinvitations,
-  getLevels
+  getLevels,
+  getLevel
 } from "../graphql";
 import {
   apolloClient
@@ -22,6 +23,9 @@ const token = localStorage.getItem("nara$obscura") || '';
 const tokenData = token ? jwt.verify(token, config.JWTKEY) : null
 const firstTime = tokenData ? tokenData.firstTime : true
 
+
+const lvldata = JSON.parse(localStorage.getItem('lvld'));
+
 const store = new Vuex.Store({
   state: {
     user: null,
@@ -32,7 +36,8 @@ const store = new Vuex.Store({
     token: localStorage.getItem("nara$obscura") || null,
     currentLevel: null,
     team: null,
-    invitations: []
+    invitations: [],
+    levelData: lvldata || []
   },
   getters: {
     isAuth: state => state.isAuth,
@@ -43,7 +48,8 @@ const store = new Vuex.Store({
     curLevel: state => state.curLevel,
     group: state => state.user ? state.user.group : null,
     invitations: state => state.invitations,
-    levels: state => state.levels
+    levels: state => state.levels,
+    levelData: state => state.levelData
   },
   actions: {
     AUTH: async (context, token) => {
@@ -176,6 +182,36 @@ const store = new Vuex.Store({
       } catch (error) {
         console.log(error)
       }
+    },
+    GET_LEVEL: async ({
+      commit
+    }, levelId) => {
+      console.log(levelId)
+      try {
+        const res = await apolloClient.query({
+          query: getLevel,
+          variables: {
+            levelId
+          }
+        })
+        console.log("GET_LEVEL", res)
+
+        if (localStorage.getItem('lvld')) {
+          const localData = localStorage.getItem('lvld')
+          const levelData = JSON.parse(localData)
+          levelData.push(res.data.getLevel)
+          localStorage.removeItem('lvld')
+          localStorage.setItem('lvld', JSON.stringify(levelData))
+          commit('GET_LEVEL', res.data.getLevel);
+        } else {
+          let newLevelData = []
+          newLevelData.push(res.data.getLevel)
+          localStorage.setItem('lvld', JSON.stringify(newLevelData))
+          commit('GET_LEVEL', res.data.getLevel)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
@@ -200,7 +236,7 @@ const store = new Vuex.Store({
       state.currentLevel = null;
       state.loading = false;
       localStorage.removeItem("nara$obscura");
-
+      localStorage.removeItem("lvld");
     },
     MAIN_LOADING: state => {
       state.loading = false;
@@ -224,6 +260,9 @@ const store = new Vuex.Store({
     },
     GET_LEVELS: (state, payload) => {
       state.levels = payload
+    },
+    GET_LEVEL: (state, payload) => {
+      state.levelData = state.levelData.push(payload)
     }
   }
 });

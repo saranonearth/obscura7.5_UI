@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>Levels</h1>
+    <div>
+      <p class="your-team">Levels</p>
+    </div>
 
     <div class="loading-l" v-if="loading">
       <h2>Fetching levels...</h2>
@@ -10,7 +12,12 @@
         <h2>You need to be in a team to play.</h2>
       </div>
       <div v-else class="levels-container">
-        <div class="level" v-for="(level, index) in levels" :key="level.level">
+        <div
+          @click="handleClick(level)"
+          class="level"
+          v-for="(level, index) in levels"
+          :key="level.level"
+        >
           <div>{{index}}</div>
         </div>
       </div>
@@ -37,6 +44,11 @@ export default {
     levels(values) {
       this.Levels = values;
       console.log(this.levels);
+    }
+  },
+  methods: {
+    handleClick(leveldata) {
+      this.$emit("level-selected", leveldata);
     }
   }
 };

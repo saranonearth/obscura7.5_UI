@@ -506,6 +506,7 @@ input:invalid {
   width: 105px;
   height: 105px;
   background: rgb(148, 48, 255);
+  cursor: pointer;
 }
 
 .loading-l {
@@ -516,6 +517,11 @@ input:invalid {
   .team-img {
     width: 150px;
     height: 150px;
+  }
+
+  .level:hover {
+    width: 85px;
+    height: 85px;
   }
 
   .level {
@@ -648,5 +654,18 @@ input:invalid {
     font-size: 0.9em;
     width: 90%;
     margin: auto;
+  }
+
+  .d-title {
+    background: #7A00FF;
+    color: #15161B;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+  }
+
+  .d-proimage {
+    width: 40px;
+    height: 40px;
   }
 }
