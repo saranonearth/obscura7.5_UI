@@ -36,7 +36,8 @@
       </div>
     </div>
     <div v-if="Team !==null">
-      <div class="team-details">
+      <h2 v-if="loading">Fetching team details...</h2>
+      <div v-if="!loading" class="team-details">
         <div>
           <p class="your-team">Your Team</p>
         </div>
@@ -95,14 +96,9 @@ export default {
       Invitations: this.$store.getters.invitations
     };
   },
+  props: ["loading"],
   components: {
     TeamMember
-  },
-  mounted() {
-    if (this.$store.getters.user.group !== null) {
-      this.$store.dispatch("GET_GAME_TEAM", this.$store.getters.group);
-      this.$store.dispatch("GET_INVITATIONS");
-    }
   },
   computed: {
     user() {

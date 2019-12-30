@@ -67,13 +67,13 @@
             <Dhome />
           </div>
           <div v-else-if="view ==='levels'">
-            <Dlevels />
+            <Dlevels :loading="loading" />
           </div>
           <div v-else-if="view ==='developers'">
             <Ddevelopers />
           </div>
           <div v-else-if="view ==='team'">
-            <Dteam />
+            <Dteam :loading="loading" />
           </div>
           <div v-else>
             <h6>Gawdsh...</h6>
@@ -105,7 +105,8 @@ export default {
   data() {
     return {
       view: "home",
-      User: null
+      User: null,
+      loading: true
     };
   },
   methods: {
@@ -133,11 +134,21 @@ export default {
       return this.$store.getters.user;
     }
   },
-  created() {
-    this.$store.dispatch("GET_USER");
+  async created() {
+    await this.$store.dispatch("GET_USER");
     if (this.$store.getters.firstTime === true) {
       this.$router.push("/onboard");
     }
+
+    if (this.$store.getters.user.group !== null) {
+      await this.$store.dispatch("GET_LEVELS");
+    }
+    if (this.$store.getters.user.group !== null) {
+      await this.$store.dispatch("GET_GAME_TEAM", this.$store.getters.group);
+      await this.$store.dispatch("GET_INVITATIONS");
+      this.loading = false;
+    }
+    this.loading = false;
   },
   watch: {
     isAuth(value) {

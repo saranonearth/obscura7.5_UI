@@ -6,7 +6,8 @@ import {
   getUser,
   createTeam,
   getGameTeam,
-  getinvitations
+  getinvitations,
+  getLevels
 } from "../graphql";
 import {
   apolloClient
@@ -41,7 +42,8 @@ const store = new Vuex.Store({
     team: state => state.team,
     curLevel: state => state.curLevel,
     group: state => state.user ? state.user.group : null,
-    invitations: state => state.invitations
+    invitations: state => state.invitations,
+    levels: state => state.levels
   },
   actions: {
     AUTH: async (context, token) => {
@@ -54,7 +56,6 @@ const store = new Vuex.Store({
         });
         console.log('AUTH', res);
         context.commit("AUTH", res.data.auth.token);
-
       } catch (error) {
         console.log(error);
       }
@@ -125,6 +126,7 @@ const store = new Vuex.Store({
         })
         console.log('CREATE TEAM', res)
         commit("CREATE_TEAM", res.data.createTeam);
+        store.dispatch("GET_LEVELS")
       } catch (error) {
         console.log(error)
       }
@@ -144,6 +146,7 @@ const store = new Vuex.Store({
         })
         console.log("CREATE_GAME_TEAM", res)
         commit("GET_GAME_TEAM", res.data.getGameTeam)
+        store.dispatch("GET_LEVELS")
       } catch (error) {
         console.log(error)
       }
@@ -157,6 +160,19 @@ const store = new Vuex.Store({
         })
         console.log(res)
         commit("GET_INVITATIONS", res.data.getTeamInvitations)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    GET_LEVELS: async ({
+      commit
+    }) => {
+      try {
+        const res = await apolloClient.query({
+          query: getLevels
+        })
+        console.log("GET_LEVELS", res)
+        commit("GET_LEVELS", res.data.getTeamLevels)
       } catch (error) {
         console.log(error)
       }
@@ -184,6 +200,7 @@ const store = new Vuex.Store({
       state.currentLevel = null;
       state.loading = false;
       localStorage.removeItem("nara$obscura");
+
     },
     MAIN_LOADING: state => {
       state.loading = false;
@@ -204,6 +221,9 @@ const store = new Vuex.Store({
     },
     GET_INVITATIONS: (state, payload) => {
       state.invitations = payload
+    },
+    GET_LEVELS: (state, payload) => {
+      state.levels = payload
     }
   }
 });

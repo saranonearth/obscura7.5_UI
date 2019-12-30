@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="loading-screen" v-if="isLoading">
+      <div class="center">
+        <div class="loader"></div>
+      </div>
       <h2>Fetching User ...</h2>
     </div>
     <div else>

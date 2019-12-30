@@ -109,3 +109,11 @@ query{
 }
 
 `
+
+export const getLevels = gql `
+query{
+  getTeamLevels{
+    level
+    levelNo
+  }
+}`

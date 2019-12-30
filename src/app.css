@@ -478,10 +478,49 @@ input:invalid {
   margin-top: 30px;
 } */
 
+.levels-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 160px;
+}
+
+.level {
+  color: #fff;
+  background: #7A00FF;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6em;
+  margin-left: 20px;
+  margin-top: 30px;
+  transition: 0.5s;
+}
+
+.level:hover {
+  width: 105px;
+  height: 105px;
+  background: rgb(148, 48, 255);
+}
+
+.loading-l {
+  margin-top: 30px;
+}
+
 @media (max-width: 800px) {
   .team-img {
     width: 150px;
     height: 150px;
+  }
+
+  .level {
+    width: 80px;
+    height: 80px;
   }
 
   .your-team {

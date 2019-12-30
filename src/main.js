@@ -26,8 +26,8 @@ const httpLink = new HttpLink({
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const token = localStorage.getItem('nara$obscura')
-
+  const token = store.state.token;
+  console.log("TOKEN", token)
   operation.setContext({
     headers: {
       Authorization: token ? `Bearer ${token}` : "",
