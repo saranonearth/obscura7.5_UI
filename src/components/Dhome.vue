@@ -74,9 +74,14 @@
               </div>
             </div>
             <div class="load-more">
-              <button v-if="isMoreTeam() === true" @click="loadMore">
-                Load More
-              </button>
+              <div v-if="!loading">
+                <button v-if="isMoreTeam() === true" @click="loadMore">
+                  Load More
+                </button>
+              </div>
+              <div v-else>
+                <p>Loading...</p>
+              </div>
             </div>
           </div>
         </div>
@@ -115,7 +120,8 @@ export default {
   data() {
     return {
       Leaderboard: this.$store.getters.leaderboard,
-      skip: 10
+      skip: 10,
+      loading: false
     };
   },
   computed: {
@@ -140,7 +146,9 @@ export default {
       return require(`../images/avatars/${value}.png`);
     },
     async loadMore() {
+      this.loading = true;
       await this.$store.dispatch("GET_ALL_TEAMS", this.skip);
+      this.loading = false;
       this.skip = this.skip + 10;
     },
     isMoreTeam() {
