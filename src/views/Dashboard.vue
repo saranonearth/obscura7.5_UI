@@ -1,17 +1,16 @@
 <template>
   <div>
-    <div class="red-bar fix"></div>
     <div class="sidebar no-mobile">
       <div class="flex-sidebar">
         <div class="s-container">
           <div>
             <div style="text-align:center;">
               <img :src="user && user.image" alt="profileimage" class="d-proimage" />
-              <p>{{User && user.gameName}}</p>
+              <p class="color">{{user && user.gameName}}</p>
             </div>
           </div>
           <div class="center">
-            <img @click="clickHome" class="s-icon" src="../images/home.png" alt="home" />
+            <img @click="clickHome" class="s-icon" src="../images/home.svg" alt="home" />
             Home
           </div>
           <div @click="clickTeam" class="center">
@@ -34,16 +33,34 @@
         </div>
       </div>
     </div>
+    <div class="top-bar">
+      <div class="top-bar-flex">
+        <div class="v-center d-title">
+          <img src="../images/w-logo.png" class="w-logo" alt="topbar-logo" />
+          <div class="v-center p-3">ObscurA 7.5</div>
+        </div>
+        <div @click="handleSignout" class="flex">
+          <div class="no-desktop top-profile">
+            <div>
+              <img :src="user && user.image" alt="profileimage" class="d-proimage" />
+            </div>
+          </div>
+          <div class="v-center p-4">
+            <img class="logout-icon" src="../images/logout.svg" alt="logout" />
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="m-sidebar no-desktop">
       <div class="m-flex-sidebar">
         <div>
-          <img @click="clickHome" class="s-icon" src="../images/home.png" alt="home" />
+          <img @click="clickHome" class="s-icon" src="../images/home.svg" alt="home" />
         </div>
         <div>
           <img @click="clickTeam" class="s-icon" src="../images/group.svg" alt="game-team" />
         </div>
         <div>
-          <img @click="clickLevels" class="s-icon" src="../images/levels.svg" alt="levels" />
+          <img class="s-icon" @click="clickLevels" src="../images/levels.svg" alt="levels" />
         </div>
         <div>
           <img @click="clickDevelopers" class="s-icon" src="../images/team.svg" alt="obscura-team" />
@@ -52,16 +69,6 @@
     </div>
     <div class="main">
       <div class="d-container">
-        <div class="top-bar">
-          <div class="no-desktop" style="text-align:center;">
-            <img :src="user && user.image" alt="profileimage" class="d-proimage" />
-            <p>{{user && user.gameName}}</p>
-          </div>
-          <div @click="handleSignout">
-            <img class="logout-icon" src="../images/logout.png" alt="logout" />
-          </div>
-        </div>
-        <h3 class="d-title">Obscura 7.5</h3>
         <div class="view-holder">
           <div v-if="view ==='home'">
             <Dhome />
@@ -159,6 +166,8 @@ export default {
       await this.$store.dispatch("GET_INVITATIONS");
       this.loading = false;
     }
+
+    await this.$store.dispatch("GET_ALL_TEAMS");
     this.loading = false;
   },
   watch: {

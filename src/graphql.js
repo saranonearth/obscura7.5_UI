@@ -127,3 +127,17 @@ query ($levelId:String!){
   }
 }
 `
+
+export const getAllTeams = gql `
+query ($skip:Int){
+  getAllTeams(skip:$skip){
+    teamCount
+    teams{
+      id
+      teamName
+      levelsSolved
+      image
+    }
+  }
+}
+`

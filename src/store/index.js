@@ -8,23 +8,34 @@ import {
   getGameTeam,
   getinvitations,
   getLevels,
-  getLevel
+  getLevel,
+  getAllTeams
 } from "../graphql";
-import {
-  apolloClient
-} from "../main";
-import config from '../config.json'
-import jwt from 'jsonwebtoken'
-
+import { apolloClient } from "../main";
+import config from "../config.json";
+import jwt from "jsonwebtoken";
 
 Vue.use(Vuex);
 
-const token = localStorage.getItem("nara$obscura") || '';
-const tokenData = token ? jwt.verify(token, config.JWTKEY) : null
-const firstTime = tokenData ? tokenData.firstTime : true
+const token = localStorage.getItem("nara$obscura") || "";
 
+const verifyToken = async token => {
+  try {
+    const res = await jwt.verify(token, config.JWTKEY);
+    if (res) {
+      return res;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return null;
+  }
+};
 
-const lvldata = JSON.parse(localStorage.getItem('lvld'));
+const tokenData = verifyToken(token) ? verifyToken(token) : null;
+const firstTime = tokenData ? tokenData.firstTime : true;
+
+const lvldata = JSON.parse(localStorage.getItem("lvld"));
 
 const store = new Vuex.Store({
   state: {
@@ -37,7 +48,8 @@ const store = new Vuex.Store({
     currentLevel: null,
     team: null,
     invitations: [],
-    levelData: lvldata || []
+    levelData: lvldata || [],
+    leaderboard: []
   },
   getters: {
     isAuth: state => state.isAuth,
@@ -46,10 +58,11 @@ const store = new Vuex.Store({
     firstTime: state => state.firstTime,
     team: state => state.team,
     curLevel: state => state.curLevel,
-    group: state => state.user ? state.user.group : null,
+    group: state => (state.user ? state.user.group : null),
     invitations: state => state.invitations,
     levels: state => state.levels,
-    levelData: state => state.levelData
+    levelData: state => state.levelData,
+    leaderboard: state => state.leaderboard
   },
   actions: {
     AUTH: async (context, token) => {
@@ -60,42 +73,29 @@ const store = new Vuex.Store({
             token
           }
         });
-        console.log('AUTH', res);
+        console.log("AUTH", res);
         context.commit("AUTH", res.data.auth.token);
       } catch (error) {
         console.log(error);
       }
     },
-    GET_USER: async ({
-      commit
-    }) => {
+    GET_USER: async ({ commit }) => {
       try {
         const res = await apolloClient.query({
           query: getUser
         });
-        console.log(res)
+        console.log(res);
         commit("GET_USER", res);
         commit("MAIN_LOADING");
-
       } catch (error) {
         commit("MAIN_LOADING");
         commit("LOGOUT");
-
       }
     },
-    LOGOUT: ({
-      commit
-    }) => {
-      commit("LOGOUT")
-
+    LOGOUT: ({ commit }) => {
+      commit("LOGOUT");
     },
-    ONBOARD: async ({
-      commit
-    }, {
-      gameName,
-      uniqueKey,
-      image
-    }) => {
+    ONBOARD: async ({ commit }, { gameName, uniqueKey, image }) => {
       try {
         const res = await apolloClient.mutate({
           mutation: Onboard,
@@ -104,23 +104,15 @@ const store = new Vuex.Store({
             uniqueKey,
             image
           }
-        })
-        console.log('ON BOARD', res)
-        commit("ON_BOARD", res.data.onBoard)
+        });
+        console.log("ON BOARD", res);
+        commit("ON_BOARD", res.data.onBoard);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    CREATE_TEAM: async ({
-      commit
-    }, {
-      teamName,
-      bio,
-      uniqueKey,
-      image
-    }) => {
+    CREATE_TEAM: async ({ commit }, { teamName, bio, uniqueKey, image }) => {
       try {
-
         const res = await apolloClient.mutate({
           mutation: createTeam,
           variables: {
@@ -129,103 +121,113 @@ const store = new Vuex.Store({
             uniqueKey,
             image
           }
-        })
-        console.log('CREATE TEAM', res)
+        });
+        console.log("CREATE TEAM", res);
         commit("CREATE_TEAM", res.data.createTeam);
-        store.dispatch("GET_LEVELS")
+        store.dispatch("GET_LEVELS");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    GET_GAME_TEAM: async ({
-        commit
-      },
-      teamId
-    ) => {
-
+    GET_GAME_TEAM: async ({ commit }, teamId) => {
       try {
         const res = await apolloClient.query({
           query: getGameTeam,
           variables: {
             teamId
           }
-        })
-        console.log("CREATE_GAME_TEAM", res)
-        commit("GET_GAME_TEAM", res.data.getGameTeam)
-        store.dispatch("GET_LEVELS")
+        });
+        console.log("CREATE_GAME_TEAM", res);
+        commit("GET_GAME_TEAM", res.data.getGameTeam);
+        store.dispatch("GET_LEVELS");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    GET_INVITATIONS: async ({
-      commit
-    }) => {
+    GET_INVITATIONS: async ({ commit }) => {
       try {
         const res = await apolloClient.query({
           query: getinvitations
-        })
-        console.log(res)
-        commit("GET_INVITATIONS", res.data.getTeamInvitations)
+        });
+        console.log(res);
+        commit("GET_INVITATIONS", res.data.getTeamInvitations);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    GET_LEVELS: async ({
-      commit
-    }) => {
+    GET_LEVELS: async ({ commit }) => {
       try {
         const res = await apolloClient.query({
           query: getLevels
-        })
-        console.log("GET_LEVELS", res)
-        commit("GET_LEVELS", res.data.getTeamLevels)
+        });
+        console.log("GET_LEVELS", res);
+        commit("GET_LEVELS", res.data.getTeamLevels);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    GET_LEVEL: async ({
-      commit
-    }, levelId) => {
-      console.log(levelId)
+    GET_LEVEL: async ({ commit }, levelId) => {
+      console.log(levelId);
       try {
         const res = await apolloClient.query({
           query: getLevel,
           variables: {
             levelId
           }
-        })
-        console.log("GET_LEVEL", res)
+        });
+        console.log("GET_LEVEL", res);
 
-        if (localStorage.getItem('lvld')) {
-          const localData = localStorage.getItem('lvld')
-          const levelData = JSON.parse(localData)
-          const newLevelData = [...levelData, {
-            ...res.data.getLevel
-          }]
-          localStorage.removeItem('lvld')
-          localStorage.setItem('lvld', JSON.stringify(newLevelData))
-          commit('GET_LEVEL', res.data.getLevel);
+        if (localStorage.getItem("lvld")) {
+          const localData = localStorage.getItem("lvld");
+          const levelData = JSON.parse(localData);
+          const newLevelData = [
+            ...levelData,
+            {
+              ...res.data.getLevel
+            }
+          ];
+          localStorage.removeItem("lvld");
+          localStorage.setItem("lvld", JSON.stringify(newLevelData));
+          commit("GET_LEVEL", res.data.getLevel);
         } else {
-          let newLevelData = [{
-            ...res.data.getLevel
-          }]
-          localStorage.setItem('lvld', JSON.stringify(newLevelData))
-          commit('GET_LEVEL', res.data.getLevel)
+          let newLevelData = [
+            {
+              ...res.data.getLevel
+            }
+          ];
+          localStorage.setItem("lvld", JSON.stringify(newLevelData));
+          commit("GET_LEVEL", res.data.getLevel);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
+      }
+    },
+    GET_ALL_TEAMS: async ({ commit }, skip) => {
+      try {
+        const res = await apolloClient.query({
+          query: getAllTeams,
+          variables: {
+            skip
+          }
+        });
+        console.log(res);
+        commit("GET_TEAMS", {
+          skip,
+          data: res.data.getAllTeams
+        });
+      } catch (error) {
+        console.log(error);
       }
     }
   },
   mutations: {
     AUTH: (state, payload) => {
       localStorage.setItem("nara$obscura", payload);
-      const tokenData = jwt.verify(payload, config.JWTKEY)
+      const tokenData = jwt.verify(payload, config.JWTKEY);
       state.token = payload;
       state.isAuth = true;
-      console.log("AUTH FS", tokenData.firstTime)
-      state.firstTime = tokenData.firstTime
-
+      console.log("AUTH FS", tokenData.firstTime);
+      state.firstTime = tokenData.firstTime;
     },
     GET_USER: (state, payload) => {
       state.user = payload.data.getGamePlayer;
@@ -245,10 +247,10 @@ const store = new Vuex.Store({
       state.loading = false;
     },
     ON_BOARD: (state, payload) => {
-      state.user = payload.player
-      state.firstTime = false
-      localStorage.removeItem('nara$obscura')
-      localStorage.setItem('nara$obscura', payload.token)
+      state.user = payload.player;
+      state.firstTime = false;
+      localStorage.removeItem("nara$obscura");
+      localStorage.setItem("nara$obscura", payload.token);
     },
     CREATE_TEAM: (state, payload) => {
       state.team = payload;
@@ -256,18 +258,28 @@ const store = new Vuex.Store({
       state.user.group = payload.id;
     },
     GET_GAME_TEAM: (state, payload) => {
-      state.team = payload
+      state.team = payload;
     },
     GET_INVITATIONS: (state, payload) => {
-      state.invitations = payload
+      state.invitations = payload;
     },
     GET_LEVELS: (state, payload) => {
-      state.levels = payload
+      state.levels = payload;
     },
     GET_LEVEL: (state, payload) => {
-      state.levelData = [...state.levelData, {
-        ...payload
-      }]
+      state.levelData = [
+        ...state.levelData,
+        {
+          ...payload
+        }
+      ];
+    },
+    GET_TEAMS: (state, payload) => {
+      if (payload.skip === 0) {
+        state.leaderboard = payload.data.teams;
+      } else {
+        state.leaderboard = [...state.leaderboard, ...payload.data.teams];
+      }
     }
   }
 });
