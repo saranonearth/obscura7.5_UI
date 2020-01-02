@@ -31,8 +31,6 @@ Minor Text : #White
   box-sizing: border-box;
 }
 
-
-
 body {
   background: #1c2337;
   color: #fff;
@@ -43,6 +41,7 @@ body {
 .title {
   font-size: 8em;
   font-family: "HACKED";
+  color: #8177ff;
 }
 
 .container {
@@ -61,7 +60,6 @@ body {
   align-items: center;
   align-self: center;
   flex-direction: column;
-
 }
 
 .footer-content {
@@ -70,7 +68,7 @@ body {
 
 .enter-button {
   color: white;
-  background-color: #7A00FF;
+  background-color: #8177ff;
   width: 160px;
   margin: auto;
   padding: 10px 10px;
@@ -79,7 +77,7 @@ body {
 
 .enter-button:hover {
   cursor: pointer;
-  background: rgb(155, 62, 255);
+  background: #9790ff;
 }
 
 .red-bar {
@@ -93,7 +91,7 @@ body {
   height: 100vh;
 }
 
-.loading-screen>* {
+.loading-screen > * {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -125,7 +123,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   position: fixed;
   left: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .d-container {
@@ -141,7 +139,7 @@ body {
 .logout-icon {
   width: 30px;
   height: 30px;
-  margin-right: 15px;
+  margin-right: 50px;
 }
 
 .m-sidebar {
@@ -150,7 +148,6 @@ body {
   position: fixed;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   bottom: 0;
-
 }
 
 .fix {
@@ -159,11 +156,13 @@ body {
 }
 
 .top-bar {
-
   align-items: center;
   padding-top: 20px;
   background-color: #3c4566;
   padding-bottom: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .top-bar-flex {
@@ -194,9 +193,7 @@ body {
   margin-top: 30px;
 }
 
-
 .logout-icon:hover {
-
   cursor: pointer;
 }
 
@@ -216,13 +213,11 @@ body {
   width: 35px;
   height: 35px;
   fill: white !important;
-
 }
 
 .d-by {
   font-size: 10px;
 }
-
 
 .bottom-bar {
   display: flex;
@@ -265,19 +260,23 @@ input {
   height: 50px;
   margin-top: 16px;
   margin-bottom: 20px;
-  color: #7A00FF;
+  color: #7a00ff;
   font-size: 1.6em;
   padding: 5px 10px;
 }
 
-
-
+.load-more {
+  margin-top: 30px;
+  text-align: center;
+  margin-bottom: 200px;
+}
 
 button {
   border: none;
-  background: #7A00FF;
+  background: #8177ff;
   color: white;
   padding: 10px 20px;
+  border-radius: 2px;
 }
 
 button:hover {
@@ -353,33 +352,31 @@ input:invalid {
 }
 
 .selected {
-  border: 2px solid #7A00FF;
+  border: 2px solid #7a00ff;
 }
 
 .team-img {
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
 }
 
 .lvl-solved {
   margin-top: 20px;
-  font-size: 1.8em;
+  font-size: 1.2em;
+  font-weight: 300;
+  border-top: #3c4566 1px solid;
+  padding-top: 20px;
 }
-
+.profile {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #f0f0f0;
+}
 .team-title {
   margin-top: 20px;
   font-size: 1.8em;
-  color: #15161B;
-  background: #7A00FF;
-}
-
-
-.your-team {
-  margin: 20px 0px;
-  font-weight: 800;
-  font-size: 2.2em;
-  color: #15161B;
-  background: #7A00FF;
+  color: #15161b;
+  background: #7a00ff;
 }
 
 .team-details {
@@ -391,44 +388,55 @@ input:invalid {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .member img {
-  margin-top: 10px;
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
+  text-align: left;
+  float: left;
 }
 
 .admin {
-  background: #7A00FF;
+  background: #8177ff;
   color: #fff;
-  width: 100px;
-  margin: auto;
+  width: 60px;
+  font-size: 0.8em;
   padding: 2px;
+  text-align: center;
   border-radius: 2px;
 }
-
+.sm-d {
+  font-size: 0.9em;
+}
 .member {
-
-  border: 3px solid #7A00FF;
   padding: 20px;
-  margin: 10px
+  margin: 10px;
+  text-align: left;
 }
 
 .mem-name {
   font-size: 1.6em;
   font-weight: 900;
+  text-align: left;
+  color: #8177ff;
+}
+.border-top {
+  padding-top: 10px;
+  text-align: left;
 }
 
 .invitation {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  border: 3px solid #7A00FF;
   margin-top: 10px;
-  padding: 4px;
-  border-radius: 30px 0px 0px 30px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.19), 0 2px 2px rgba(0, 0, 0, 0.13);
+  padding: 10px;
+  background: #262d47;
+  border-radius: 6px;
+  height: auto;
 }
 
 .invitation img {
@@ -437,19 +445,19 @@ input:invalid {
   border-radius: 50%;
   margin-top: 2px;
   margin-left: 2px;
-  border: 2px solid #7A00FF;
+  border: 2px solid #7a00ff;
   padding: 2px;
 }
 
 .i-p-name {
   font-weight: 900;
-
 }
 
 .accept {
-  background: #7A00FF;
-  padding: 4px;
+  background: #8177ff;
+  padding: 4px 6px;
   color: #fff;
+  border-radius: 2px;
   margin-right: 10px;
 }
 
@@ -495,7 +503,7 @@ input:invalid {
 
 .level {
   color: #fff;
-  background: #7A00FF;
+  background: #7a00ff;
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -523,7 +531,6 @@ input:invalid {
   display: flex;
   justify-content: center;
   align-self: center;
-
 }
 
 .p-4 {
@@ -531,7 +538,7 @@ input:invalid {
 }
 
 .d-title {
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: #70768d;
   font-weight: 800;
 }
@@ -550,7 +557,7 @@ input:invalid {
 }
 
 .page-title {
-  font-size: 3em;
+  font-size: 2.6em;
   font-weight: 300;
 }
 
@@ -568,8 +575,8 @@ input:invalid {
 }
 
 .fa {
-  width: 43px;
-  height: 43px;
+  width: 41px;
+  height: 41px;
   margin-top: -3px;
 }
 
@@ -592,7 +599,6 @@ input:invalid {
 .leader-board {
   margin-top: 20px;
   width: 100%;
-  margin-bottom: 250px;
   background-color: #262d47;
   padding: 30px;
   border-radius: 6px;
@@ -604,9 +610,24 @@ input:invalid {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1.2px solid #3C4566;
+  border-bottom: 1.2px solid #3c4566;
   margin-top: 10px;
   padding-bottom: 7px;
+}
+
+.p-6 {
+  padding-left: 50px;
+}
+
+.j-c {
+  display: flex;
+  justify-content: center;
+}
+
+.table-item {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
 }
 
 .table-row:first-child {
@@ -646,7 +667,7 @@ input:invalid {
 }
 
 .h-team-members::-webkit-scrollbar {
-  width: 0 !important
+  width: 0 !important;
 }
 
 .h-team-members::-webkit-scrollbar {
@@ -654,7 +675,7 @@ input:invalid {
 }
 
 .h-team-members::-webkit-scrollbar-track-piece {
-  background-color: transparent
+  background-color: transparent;
 }
 
 .text-center {
@@ -667,14 +688,13 @@ input:invalid {
   width: 120px;
   border-radius: 6px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.13);
-  width: 120px;
+  width: 150px;
   scrollbar-width: none !important;
 }
 
 .fac {
   width: 40px;
   margin-top: -2px;
-  ;
   height: 40px;
 }
 
@@ -690,7 +710,6 @@ input:invalid {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-
 }
 
 .h-left {
@@ -701,13 +720,97 @@ input:invalid {
   width: 40%;
 }
 
-
-
+.item {
+  text-align: center;
+}
+.team-cont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.t-left {
+  width: 68%;
+}
+.t-right {
+  width: 30%;
+}
+.bio {
+  color: #70768d;
+  font-size: 1em;
+  font-weight: 300;
+}
+.sm {
+  font-size: 0.8em;
+  opacity: 0.5;
+  padding-left: 5px;
+}
+.card-d {
+  text-align: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.13);
+  padding: 30px;
+  background: #262d47;
+  border-radius: 6px;
+  height: auto;
+}
+.pd-l {
+  padding: 15px;
+}
+.name-team {
+  color: #8177ff;
+  font-weight: 800;
+}
 @media (max-width: 800px) {
+  .logout-icon {
+    margin-right: 0px;
+  }
+  .table-item {
+    width: 220px;
+  }
+  .team-cont {
+    width: 100%;
+    margin-top: 5px;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+  }
+
+  .t-left {
+    width: 100%;
+  }
+  .t-right {
+    width: 100%;
+  }
+  .d-title {
+    font-size: 1.2em;
+    color: #70768d;
+  }
+
+  .item {
+    width: 50px;
+    font-size: 0.9em;
+    text-align: center;
+  }
+
+  .table-row {
+    font-size: 0.9em;
+  }
+
+  .t-center {
+    text-align: center;
+  }
+
+  .l-image {
+    width: 20px;
+    height: 20px;
+  }
+
+  .p-6 {
+    padding-left: 30px;
+  }
 
   .h-pro-img {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
   }
 
   .text-center {
@@ -735,11 +838,14 @@ input:invalid {
 
   .no-r {
     margin-top: 20px;
+    text-align: center;
+    color: #262d47;
     font-size: 1.6em;
   }
 
   .title {
     font-size: 3.5em;
+    color: #70768d;
   }
 
   input {
@@ -750,8 +856,12 @@ input:invalid {
   }
 
   button {
-    width: 180px;
-    height: 50px;
+    width: 120px;
+    height: 40px;
+  }
+
+  .load-more {
+    margin-bottom: 50px;
   }
 
   .no-mobile {
@@ -767,14 +877,13 @@ input:invalid {
     display: block;
   }
 
-
   label {
     font-size: 1em;
   }
 
   .enter-button {
     color: white;
-    background-color: #7A00FF;
+    background-color: #7a00ff;
     width: 120px;
     margin: auto;
     padding: 9px 6px;
@@ -792,7 +901,8 @@ input:invalid {
     padding: 15px;
     background-color: #3c4566;
     justify-content: space-between;
-
+    position: sticky;
+    top: 0;
   }
 
   .d-proimage {
@@ -801,7 +911,6 @@ input:invalid {
 
   .d-container {
     width: 95%;
-
   }
 
   .d-footer-content {
@@ -844,7 +953,6 @@ input:invalid {
     margin: auto;
   }
 
-
   .d-proimage {
     width: 40px;
     height: 40px;
@@ -876,7 +984,6 @@ input:invalid {
     margin-top: 20px;
     width: 80%;
     margin-left: 20px;
-
   }
 
   .so-icon {
@@ -890,7 +997,7 @@ input:invalid {
 
   .d-container {
     margin: auto;
-    margin-top: 30px;
+    margin-top: 20px;
     width: 90%;
   }
 
@@ -908,5 +1015,31 @@ input:invalid {
 
   .h-right {
     width: 100%;
+  }
+
+  .h-pro-img {
+    width: 100px;
+    height: 100px;
+  }
+  .name-team {
+    font-size: 1.6em;
+    font-weight: 500;
+  }
+  .page-title-sub {
+    font-size: 1.2em;
+  }
+  .lvl-solved {
+    font-size: 1em;
+  }
+  .sm {
+    display: block;
+    padding: 0;
+    padding-top: 5px;
+  }
+}
+@media only screen and (min-width: 800px) and (max-width: 1000px) {
+  .team-img {
+    width: 120px;
+    height: 120px;
   }
 }

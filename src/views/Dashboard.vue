@@ -167,7 +167,7 @@ export default {
       this.loading = false;
     }
 
-    await this.$store.dispatch("GET_ALL_TEAMS");
+    await this.$store.dispatch("GET_ALL_TEAMS", 0);
     this.loading = false;
   },
   watch: {

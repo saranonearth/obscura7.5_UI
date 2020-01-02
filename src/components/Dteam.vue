@@ -1,7 +1,9 @@
 <template>
   <div>
     <div v-if="User.group === null">
-      <h2 class="text-mobile">You do not have any team. Either create one or join one from home.</h2>
+      <h2 class="text-mobile">
+        You do not have any team. Either create one or join one from home.
+      </h2>
 
       <div class="create-team-form">
         <label class="team-label" for="teamName">Choose a team avatar.</label>
@@ -11,7 +13,9 @@
               @click="avatarSelect(img.name)"
               :src="getImageUrl(img.name)"
               alt="pro-image"
-              :class="image===img.name?'avatar-list selected':'avatar-list'"
+              :class="
+                image === img.name ? 'avatar-list selected' : 'avatar-list'
+              "
             />
           </div>
         </div>
@@ -19,7 +23,7 @@
           <div>
             <label class="team-label" for="teamName">Team Name</label>
             <br />
-            <input type="text" v-model="teamName" required />
+            <input type="text" v-model="teamName" maxlength="25" required />
           </div>
           <div>
             <label class="team-label" for="bio">Bio</label>
@@ -35,44 +39,64 @@
         </form>
       </div>
     </div>
-    <div v-if="Team !==null">
+    <div v-if="Team !== null">
       <h2 v-if="loading">Fetching team details...</h2>
       <div v-if="!loading" class="team-details">
-        <div>
-          <p class="your-team">Your Team</p>
-        </div>
-        <div>
-          <img class="team-img" :src="getImageUrl(Team.image)" alt />
-        </div>
-        <h1 class="name-team">{{Team.teamName}}</h1>
-        <h4>{{Team.bio}}</h4>
-        <h3 class="lvl-solved">Levels Solved: {{Team.levelsSolved}}</h3>
-        <h3 class="team-title">Requests to join</h3>
-        <h4 class="no-r" v-if="invLength()===false">No requests.</h4>
-        <div v-for="i in Invitations" :key="i.player.gameName">
-          <div class="invitation">
-            <div>
-              <img :src="i.player.image" alt="i-player-img" />
-            </div>
-            <div class="holder-i">
-              <div class="i-name">
-                <div>
-                  <p class="i-p-name">{{i.player.gameName}}</p>
-                </div>
-                <div>
-                  <p>{{i.player.uniqueKey}}</p>
-                </div>
-              </div>
-              <div v-if="isAdmin(User.id)" class="i-accept">
-                <div class="accept">Accept</div>
-              </div>
-            </div>
+        <div class="left">
+          <div>
+            <p class="page-title">Your Team</p>
           </div>
-        </div>
-        <h3 class="team-title">Members</h3>
-        <div class="team-members">
-          <div class="member" v-for="m in sort(Team.members)" :key="m.player.id">
-            <TeamMember :admin="isAdmin(m.player.id)" :member="m" />
+          <div class="team-cont">
+            <div class="t-left">
+              <p class="profile page-title-sub">
+                Requests to join your team.
+                <span class="bio sm">[Only admin can accept requests.]</span>
+              </p>
+              <p class="bio" v-if="invLength() === false">No requests.</p>
+              <div v-for="i in Invitations" :key="i.player.gameName">
+                <div class="invitation">
+                  <div>
+                    <img :src="i.player.image" alt="i-player-img" />
+                  </div>
+                  <div class="holder-i">
+                    <div class="i-name">
+                      <div>
+                        <p class="i-p-name">{{ i.player.gameName }}</p>
+                      </div>
+                      <div class="bio">
+                        <p>{{ i.player.uniqueKey }}</p>
+                      </div>
+                    </div>
+                    <div v-if="isAdmin(User.id)" class="i-accept">
+                      <div class="accept">Accept</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p class="page-title-sub">Members</p>
+              <div class="team-members">
+                <div
+                  class="member card-d pd-l"
+                  v-for="m in sort(Team.members)"
+                  :key="m.player.id"
+                >
+                  <TeamMember :admin="isAdmin(m.player.id)" :member="m" />
+                </div>
+              </div>
+            </div>
+            <div class="t-right">
+              <p class="profile page-title-sub">Profile</p>
+              <div class="card-d">
+                <div>
+                  <img class="team-img" :src="getImageUrl(Team.image)" alt />
+                </div>
+                <h1 class="name-team">{{ Team.teamName }}</h1>
+                <p class="bio">{{ Team.bio }}</p>
+                <h3 class="lvl-solved">
+                  Levels Solved: {{ Team.levelsSolved }}
+                </h3>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -166,5 +190,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
