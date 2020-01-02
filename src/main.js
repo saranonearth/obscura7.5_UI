@@ -9,6 +9,7 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloLink, concat } from "apollo-link";
 import VueApollo from "vue-apollo";
 import "./app.css";
+import LoadScript from "vue-plugin-load-script";
 
 Vue.config.productionTip = false;
 
@@ -39,7 +40,7 @@ const apolloProvider = new VueApollo({
     $loadingKey: "loading"
   }
 });
-
+Vue.use(LoadScript);
 Vue.use(VueApollo);
 Vue.use(GSignInButton);
 new Vue({

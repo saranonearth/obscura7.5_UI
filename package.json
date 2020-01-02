@@ -33,6 +33,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-collapse": "^1.0.31",
+    "vue-plugin-load-script": "^1.2.0",
     "vue-template-compiler": "^2.6.10"
   }
 }

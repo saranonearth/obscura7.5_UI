@@ -150,6 +150,19 @@ export default {
         return false;
       }
     }
+  },
+  mounted() {
+    this.$loadScript(
+      "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v5.0&appId=342135736713338&autoLogAppEvents=1"
+    )
+      .then(() => {
+        this.$nextTick(() => {
+          window.FB.XFBML.parse();
+        });
+      })
+      .catch(() => {
+        console.log("SCRIPT LAODING ERROR");
+      });
   }
 };
 </script>
