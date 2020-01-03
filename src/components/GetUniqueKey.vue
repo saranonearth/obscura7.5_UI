@@ -3,7 +3,7 @@
     <form @submit.prevent="onNext(uk)">
       <label for="uniquekey">A line about your self.</label>
       <br />
-      <input type="text" v-model="uk" maxlength="30" required />
+      <input type="text" v-model="uk" maxlength="50" required />
       <br />
       <button>Next →</button>
     </form>

@@ -7,39 +7,19 @@
           <p class="color2 m-t-2">For clues and updates follow us on</p>
           <div class="social-icons m-t-3">
             <div class="v-center">
-              <img
-                class="so-icon fa"
-                src="../images/facebook.svg"
-                alt="fb-logo"
-              />
+              <img class="so-icon fa" src="../images/facebook.svg" alt="fb-logo" />
             </div>
             <div>
-              <img
-                class="so-icon p-3"
-                src="../images/twitter.svg"
-                alt="fb-logo"
-              />
+              <img class="so-icon p-3" src="../images/twitter.svg" alt="fb-logo" />
             </div>
             <div>
-              <img
-                class="so-icon p-3"
-                src="../images/instagram.svg"
-                alt="fb-logo"
-              />
+              <img class="so-icon p-3" src="../images/instagram.svg" alt="fb-logo" />
             </div>
           </div>
           <h2 v-if="isTeam" class="page-title-sub">Team Members</h2>
           <div class="h-team-members">
-            <div
-              v-for="m in team && team.members"
-              :key="m.player.id"
-              class="memberi"
-            >
-              <img
-                class="h-pro-img"
-                :src="m.player.image"
-                alt="team-player-image"
-              />
+            <div v-for="m in team && team.members" :key="m.player.id" class="memberi">
+              <img class="h-pro-img" :src="m.player.image" alt="team-player-image" />
               <p class="text-center">{{ m.player.gameName }}</p>
             </div>
           </div>
@@ -54,30 +34,20 @@
 
                 <div class="item">Levels solved</div>
               </div>
-              <div
-                v-for="(team, index) in Leaderboard"
-                :key="team.id"
-                class="table-row"
-              >
+              <div v-for="(team, index) in Leaderboard" :key="team.id" class="table-row">
                 <div class="table-item lb-team">
                   <div class="v-center j-c">{{ index + 1 }}</div>
                   <div class="p-6">
-                    <img
-                      class="l-image"
-                      :src="getImageUrl(team.image)"
-                      alt="team-pro-image"
-                    />
+                    <img class="l-image" :src="getImageUrl(team.image)" alt="team-pro-image" />
                   </div>
-                  <div class="p-4 v-center">{{ team.teamName }}</div>
+                  <div @click="handleShowTeam(team.id)" class="p-4 v-center h">{{ team.teamName }}</div>
                 </div>
                 <div class="item v-center">{{ team.levelsSolved }}</div>
               </div>
             </div>
             <div class="load-more">
               <div v-if="!loading">
-                <button v-if="isMoreTeam() === true" @click="loadMore">
-                  Load More
-                </button>
+                <button v-if="isMoreTeam() === true" @click="loadMore">Load More</button>
               </div>
               <div v-else>
                 <p>Loading...</p>
@@ -98,15 +68,12 @@
           data-hide-cover="true"
           data-show-facepile="true"
         >
-          <blockquote
-            cite="https://www.facebook.com/obscuranitkkr/"
-            class="fb-xfbml-parse-ignore"
-          >
-            <a href="https://www.facebook.com/obscuranitkkr/"
-              >Loading ObscurA NIT Kurukshetra Facebook Timeline. If it is still
+          <blockquote cite="https://www.facebook.com/obscuranitkkr/" class="fb-xfbml-parse-ignore">
+            <a href="https://www.facebook.com/obscuranitkkr/">
+              Loading ObscurA NIT Kurukshetra Facebook Timeline. If it is still
               not showing try refreshing or disabling your browser "Tracking"
-              settings.</a
-            >
+              settings.
+            </a>
           </blockquote>
         </div>
       </div>
@@ -121,7 +88,8 @@ export default {
     return {
       Leaderboard: this.$store.getters.leaderboard,
       skip: 10,
-      loading: false
+      loading: false,
+      showTeamId: null
     };
   },
   computed: {
@@ -157,6 +125,10 @@ export default {
       } else {
         return false;
       }
+    },
+    handleShowTeam(id) {
+      this.showTeamId = id;
+      this.$emit("show-team", this.showTeamId);
     }
   },
   mounted() {

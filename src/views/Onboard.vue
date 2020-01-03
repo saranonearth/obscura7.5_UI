@@ -1,14 +1,23 @@
 <template>
   <div>
     <div class="main no-margin">
-      <div class="d-container">
-        <div class="top-bar">
-          <div @click="handleSignout">
-            <img class="logout-icon" src="../images/logout.png" alt="logout" />
+      <div class="top-bar">
+        <div class="top-bar-flex">
+          <div class="v-center d-title">
+            <img src="../images/w-logo.png" class="w-logo" alt="topbar-logo" />
+            <div class="v-center p-3">ObscurA 7.5</div>
+          </div>
+          <div @click="handleSignout" class="flex">
+            <div class="no-desktop top-profile">
+              <div>
+                <img :src="user && user.image" alt="profileimage" class="d-proimage" />
+              </div>
+            </div>
+            <div class="v-center p-4">
+              <img class="logout-icon" src="../images/logout.svg" alt="logout" />
+            </div>
           </div>
         </div>
-        <h3 class="d-title">Obscura 7.5</h3>
-        <div></div>
       </div>
       <div class="onboard-container">
         <div v-if="view==='gamename'">
@@ -51,6 +60,9 @@ export default {
     },
     firstTime() {
       return this.$store.getters.firstTime;
+    },
+    user() {
+      return this.$store.getters.user;
     }
   },
   watch: {

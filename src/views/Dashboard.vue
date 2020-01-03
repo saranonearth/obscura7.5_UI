@@ -71,7 +71,7 @@
       <div class="d-container">
         <div class="view-holder">
           <div v-if="view ==='home'">
-            <Dhome />
+            <Dhome @show-team="showteam" />
           </div>
           <div v-else-if="view ==='levels'">
             <Dlevels @level-selected="leveldata" :loading="loading" />
@@ -84,6 +84,9 @@
           </div>
           <div v-else-if="view ==='level'">
             <Level :levelcontent="selLevel" :index="index" />
+          </div>
+          <div v-else-if="view ==='showteam'">
+            <Steam :showteam="showTeamid" />
           </div>
           <div v-else>
             <h6>Gawdsh...</h6>
@@ -111,6 +114,7 @@ import Dhome from "../components/Dhome";
 import Ddevelopers from "../components/Ddevelopers";
 import Dteam from "../components/Dteam";
 import Level from "../components/Level";
+import Steam from "../components/Steam";
 export default {
   name: "Dashboard",
   data() {
@@ -119,7 +123,8 @@ export default {
       User: null,
       loading: true,
       selLevel: null,
-      index: null
+      index: null,
+      showTeamid: null
     };
   },
   methods: {
@@ -142,6 +147,11 @@ export default {
       this.selLevel = e.leveldata;
       this.index = e.index;
       this.view = "level";
+    },
+    showteam(e) {
+      this.showTeamid = e;
+      console.log(this.showTeamid);
+      this.view = "showteam";
     }
   },
   computed: {
@@ -150,10 +160,14 @@ export default {
     },
     user() {
       return this.$store.getters.user;
+    },
+    firsttime() {
+      return this.$store.getters.firstTime;
     }
   },
   async created() {
     await this.$store.dispatch("GET_USER");
+    console.log("FIRST TIME", this.$store.getters.firstTime);
     if (this.$store.getters.firstTime === true) {
       this.$router.push("/onboard");
     }
@@ -162,7 +176,10 @@ export default {
       await this.$store.dispatch("GET_LEVELS");
     }
     if (this.$store.getters.user.group !== null) {
-      await this.$store.dispatch("GET_GAME_TEAM", this.$store.getters.group);
+      await this.$store.dispatch("GET_GAME_TEAM", {
+        teamId: this.$store.getters.group,
+        showTeam: false
+      });
       await this.$store.dispatch("GET_INVITATIONS");
       this.loading = false;
     }
@@ -178,6 +195,11 @@ export default {
     },
     user(value) {
       this.User = value;
+    },
+    firsttime(value) {
+      if (value === true) {
+        this.$router.push("/onboard");
+      }
     }
   },
   components: {
@@ -185,7 +207,8 @@ export default {
     Dhome,
     Dteam,
     Ddevelopers,
-    Level
+    Level,
+    Steam
   }
 };
 </script>

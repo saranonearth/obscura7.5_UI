@@ -91,7 +91,7 @@ body {
   height: 100vh;
 }
 
-.loading-screen > * {
+.loading-screen>* {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -148,6 +148,7 @@ body {
   position: fixed;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   bottom: 0;
+  z-index: 2;
 }
 
 .fix {
@@ -253,14 +254,16 @@ label {
   font-size: 2em;
 }
 
+
+
 input {
   border: none;
-  background: rgb(29, 30, 37);
+  background: rgb(50, 57, 78);
   width: 300px;
   height: 50px;
   margin-top: 16px;
   margin-bottom: 20px;
-  color: #7a00ff;
+  color: #8177ff;
   font-size: 1.6em;
   padding: 5px 10px;
 }
@@ -367,11 +370,13 @@ input:invalid {
   border-top: #3c4566 1px solid;
   padding-top: 20px;
 }
+
 .profile {
   font-size: 1.2em;
   margin-bottom: 10px;
   color: #f0f0f0;
 }
+
 .team-title {
   margin-top: 20px;
   font-size: 1.8em;
@@ -407,9 +412,11 @@ input:invalid {
   text-align: center;
   border-radius: 2px;
 }
+
 .sm-d {
   font-size: 0.9em;
 }
+
 .member {
   padding: 20px;
   margin: 10px;
@@ -422,6 +429,7 @@ input:invalid {
   text-align: left;
   color: #8177ff;
 }
+
 .border-top {
   padding-top: 10px;
   text-align: left;
@@ -723,28 +731,34 @@ input:invalid {
 .item {
   text-align: center;
 }
+
 .team-cont {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
 }
+
 .t-left {
   width: 68%;
 }
+
 .t-right {
   width: 30%;
 }
+
 .bio {
   color: #70768d;
   font-size: 1em;
   font-weight: 300;
 }
+
 .sm {
   font-size: 0.8em;
   opacity: 0.5;
   padding-left: 5px;
 }
+
 .card-d {
   text-align: center;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.13);
@@ -753,20 +767,56 @@ input:invalid {
   border-radius: 6px;
   height: auto;
 }
+
 .pd-l {
   padding: 15px;
 }
+
 .name-team {
   color: #8177ff;
   font-weight: 800;
 }
+
+.h:hover {
+  cursor: pointer;
+  color: #8177ff;
+}
+
+.t-center-i {
+  text-align: center;
+  margin-top: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.alert {
+  background: #8177ff;
+  color: white;
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 4px 4px rgba(0, 0, 0, 0.13);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
 @media (max-width: 800px) {
+  .in-btn {
+    width: 200px;
+  }
+
   .logout-icon {
     margin-right: 0px;
   }
+
   .table-item {
     width: 220px;
   }
+
   .team-cont {
     width: 100%;
     margin-top: 5px;
@@ -777,9 +827,11 @@ input:invalid {
   .t-left {
     width: 100%;
   }
+
   .t-right {
     width: 100%;
   }
+
   .d-title {
     font-size: 1.2em;
     color: #70768d;
@@ -845,7 +897,7 @@ input:invalid {
 
   .title {
     font-size: 3.5em;
-    color: #70768d;
+    color: #8177ff;
   }
 
   input {
@@ -940,6 +992,7 @@ input:invalid {
     height: 20px;
     color: white;
     background: #262d47;
+
   }
 
   .mobile-footer-home {
@@ -1021,22 +1074,40 @@ input:invalid {
     width: 100px;
     height: 100px;
   }
+
   .name-team {
     font-size: 1.6em;
     font-weight: 500;
   }
+
   .page-title-sub {
     font-size: 1.2em;
   }
+
   .lvl-solved {
     font-size: 1em;
   }
+
   .sm {
     display: block;
     padding: 0;
     padding-top: 5px;
   }
+
+  .fa {
+    width: 43.5px;
+    height: 43.5px;
+  }
+
+  .d-footer-content {
+    z-index: 3;
+  }
+
+  .bottom-bar {
+    z-index: 3;
+  }
 }
+
 @media only screen and (min-width: 800px) and (max-width: 1000px) {
   .team-img {
     width: 120px;

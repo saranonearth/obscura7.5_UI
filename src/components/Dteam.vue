@@ -1,9 +1,7 @@
 <template>
   <div>
     <div v-if="User.group === null">
-      <h2 class="text-mobile">
-        You do not have any team. Either create one or join one from home.
-      </h2>
+      <h2 class="text-mobile">You do not have any team. Either create one or join one from home.</h2>
 
       <div class="create-team-form">
         <label class="team-label" for="teamName">Choose a team avatar.</label>
@@ -39,7 +37,7 @@
         </form>
       </div>
     </div>
-    <div v-if="Team !== null">
+    <div v-if="Team !== null && User.group !== null">
       <h2 v-if="loading">Fetching team details...</h2>
       <div v-if="!loading" class="team-details">
         <div class="left">
@@ -68,18 +66,14 @@
                       </div>
                     </div>
                     <div v-if="isAdmin(User.id)" class="i-accept">
-                      <div class="accept">Accept</div>
+                      <div @click="acceptInvite(i.id,i.player.id)" class="accept">Accept</div>
                     </div>
                   </div>
                 </div>
               </div>
               <p class="page-title-sub">Members</p>
               <div class="team-members">
-                <div
-                  class="member card-d pd-l"
-                  v-for="m in sort(Team.members)"
-                  :key="m.player.id"
-                >
+                <div class="member card-d pd-l" v-for="m in sort(Team.members)" :key="m.player.id">
                   <TeamMember :admin="isAdmin(m.player.id)" :member="m" />
                 </div>
               </div>
@@ -92,9 +86,7 @@
                 </div>
                 <h1 class="name-team">{{ Team.teamName }}</h1>
                 <p class="bio">{{ Team.bio }}</p>
-                <h3 class="lvl-solved">
-                  Levels Solved: {{ Team.levelsSolved }}
-                </h3>
+                <h3 class="lvl-solved">Levels Solved: {{ Team.levelsSolved }}</h3>
               </div>
             </div>
           </div>
@@ -185,6 +177,12 @@ export default {
       this.uniqueKey = "";
       this.bio = "";
       this.image = "";
+    },
+    acceptInvite(inviteId, playerId) {
+      this.$store.dispatch("ACCEPT_INVITE", {
+        inviteId,
+        playerId
+      });
     }
   }
 };

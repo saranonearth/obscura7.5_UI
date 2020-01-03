@@ -100,7 +100,9 @@ query ($teamId:String!){
 export const getinvitations = gql `
 query{
   getTeamInvitations{
+    id
     player{
+      id
       gameName
       image
       uniqueKey
@@ -137,6 +139,30 @@ query ($skip:Int){
       teamName
       levelsSolved
       image
+    }
+  }
+}
+`
+
+export const sendInvite = gql `
+mutation ($teamId:String!){
+  sendInvite(teamId:$teamId)
+}
+`
+
+export const acceptInvite = gql `
+mutation ($playerId:String!,$inviteId:String!){
+  acceptInvite(playerId:$playerId,inviteId:$inviteId){
+    members{
+      player{
+        id
+        gameName
+        image
+      }
+      solvedLevels{
+        level
+      }
+      levelsSolved
     }
   }
 }

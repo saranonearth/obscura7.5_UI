@@ -9,7 +9,9 @@ import {
   getinvitations,
   getLevels,
   getLevel,
-  getAllTeams
+  getAllTeams,
+  sendInvite,
+  acceptInvite
 } from "../graphql";
 import { apolloClient } from "../main";
 import config from "../config.json";
@@ -17,24 +19,13 @@ import jwt from "jsonwebtoken";
 
 Vue.use(Vuex);
 
-const token = localStorage.getItem("nara$obscura") || "";
+const token = localStorage.getItem("nara$obscura") || null;
 
-const verifyToken = async token => {
-  try {
-    const res = await jwt.verify(token, config.JWTKEY);
-    if (res) {
-      return res;
-    } else {
-      return null;
-    }
-  } catch (error) {
-    return null;
-  }
-};
+const tokenData = token ? jwt.verify(token, config.JWTKEY) : null;
 
-const tokenData = verifyToken(token) ? verifyToken(token) : null;
-const firstTime = tokenData ? tokenData.firstTime : true;
+const firstTime = tokenData ? tokenData.firstTime : null;
 
+console.log("TOKEN DATA", firstTime);
 const lvldata = JSON.parse(localStorage.getItem("lvld"));
 
 const store = new Vuex.Store({
@@ -49,7 +40,9 @@ const store = new Vuex.Store({
     team: null,
     invitations: [],
     levelData: lvldata || [],
-    leaderboard: []
+    leaderboard: [],
+    showTeam: null,
+    inviteMsg: null
   },
   getters: {
     isAuth: state => state.isAuth,
@@ -62,7 +55,9 @@ const store = new Vuex.Store({
     invitations: state => state.invitations,
     levels: state => state.levels,
     levelData: state => state.levelData,
-    leaderboard: state => state.leaderboard
+    leaderboard: state => state.leaderboard,
+    showTeam: state => state.showTeam,
+    inviteMsg: state => state.inviteMsg
   },
   actions: {
     AUTH: async (context, token) => {
@@ -125,11 +120,13 @@ const store = new Vuex.Store({
         console.log("CREATE TEAM", res);
         commit("CREATE_TEAM", res.data.createTeam);
         store.dispatch("GET_LEVELS");
+        store.dispatch("GET_ALL_TEAMS");
+        store.dispatch("GET_INVITATIONS");
       } catch (error) {
         console.log(error);
       }
     },
-    GET_GAME_TEAM: async ({ commit }, teamId) => {
+    GET_GAME_TEAM: async ({ commit }, { teamId, showTeam }) => {
       try {
         const res = await apolloClient.query({
           query: getGameTeam,
@@ -138,8 +135,10 @@ const store = new Vuex.Store({
           }
         });
         console.log("CREATE_GAME_TEAM", res);
+        if (showTeam === true) {
+          return commit("SHOW_TEAM", res.data.getGameTeam);
+        }
         commit("GET_GAME_TEAM", res.data.getGameTeam);
-        store.dispatch("GET_LEVELS");
       } catch (error) {
         console.log(error);
       }
@@ -218,6 +217,40 @@ const store = new Vuex.Store({
       } catch (error) {
         console.log(error);
       }
+    },
+    SEND_INVITE: async ({ commit }, teamId) => {
+      try {
+        console.log("HERE");
+        const res = await apolloClient.mutate({
+          mutation: sendInvite,
+          variables: {
+            teamId
+          }
+        });
+        console.log(res);
+        commit("SEND_INVITE", res.data.sendInvite);
+      } catch (error) {
+        console.log("hereee");
+        console.log(JSON.stringify(error.message));
+      }
+    },
+    ACCEPT_INVITE: async ({ commit }, { inviteId, playerId }) => {
+      try {
+        const res = await apolloClient.mutate({
+          mutation: acceptInvite,
+          variables: {
+            inviteId,
+            playerId
+          }
+        });
+        console.log("ACCEPT INVITE", res);
+        commit("ACCEPT_INVITE", {
+          inviteId,
+          members: res.data.acceptInvite.members
+        });
+      } catch (error) {
+        console.log(JSON.stringify(error.message));
+      }
     }
   },
   mutations: {
@@ -242,6 +275,7 @@ const store = new Vuex.Store({
       state.loading = false;
       localStorage.removeItem("nara$obscura");
       localStorage.removeItem("lvld");
+      apolloClient.cache.reset();
     },
     MAIN_LOADING: state => {
       state.loading = false;
@@ -280,6 +314,25 @@ const store = new Vuex.Store({
       } else {
         state.leaderboard = [...state.leaderboard, ...payload.data.teams];
       }
+    },
+    SHOW_TEAM: (state, payload) => {
+      state.showTeam = payload;
+    },
+    REMOVE_SHOW_TEAM: state => {
+      state.showTeam = null;
+    },
+    SEND_INVITE: (state, payload) => {
+      state.inviteMsg = payload;
+    },
+    REMOVE_INVITE_MSG: state => {
+      state.inviteMsg = null;
+    },
+    ACCEPT_INVITE: (state, payload) => {
+      const newInvites = state.invitations.filter(
+        e => e.id !== payload.inviteId
+      );
+      state.invitations = newInvites;
+      state.team.members = payload.members;
     }
   }
 });
