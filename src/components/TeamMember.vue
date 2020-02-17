@@ -5,9 +5,7 @@
       <p class="mem-name">{{ player.gameName }}</p>
       <p class="admin" v-if="admin">Admin🍭</p>
       <div class="border-top">
-        <p class="sm-d">
-          No of Levels Solved: &nbsp; {{ member.levelsSolved }}
-        </p>
+        <p class="sm-d">No of Levels Solved: &nbsp; {{ member.levelsSolved }}</p>
         <p class="bio">Solved levels:</p>
         <p class="bio">{{ solvedLevels }}</p>
       </div>

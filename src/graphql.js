@@ -84,7 +84,7 @@ query ($teamId:String!){
         id
       }
       solvedLevels{
-        level
+        levelNo
       }
       levelsSolved
     }
@@ -166,4 +166,16 @@ mutation ($playerId:String!,$inviteId:String!){
     }
   }
 }
+`
+export const checkAnswer = gql `
+mutation($answer:String!,$levelNo:Int!){
+  checkAnswer(answer:$answer,levelNo:$levelNo){
+    message
+    newCurlevel{
+      level
+      levelNo
+    }
+  }
+}
+
 `

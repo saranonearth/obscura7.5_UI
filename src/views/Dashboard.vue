@@ -83,7 +83,7 @@
             <Dteam :loading="loading" />
           </div>
           <div v-else-if="view ==='level'">
-            <Level :levelcontent="selLevel" :index="index" />
+            <Level :levelcontent="selLevel" @changeLevelView="clickLevels" :index="index" />
           </div>
           <div v-else-if="view ==='showteam'">
             <Steam :showteam="showTeamid" />

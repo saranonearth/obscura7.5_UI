@@ -22,7 +22,8 @@ export default {
   },
   methods: {
     onSignInSuccess(googleUser) {
-      const token = googleUser.Zi.id_token;
+      console.log(googleUser);
+      const token = googleUser.uc.id_token;
       this.$store.dispatch("AUTH", token);
     },
     onSignInError(error) {

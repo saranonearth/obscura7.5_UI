@@ -129,7 +129,7 @@ body {
 .d-container {
   margin-top: 20px;
   width: 80%;
-  margin-left: 80px;
+  margin-left: 150px;
 }
 
 .main {
@@ -802,6 +802,10 @@ button:hover {
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
+}
+
+.level-container {
+  margin-top: 60px;
 }
 
 @media (max-width: 800px) {
