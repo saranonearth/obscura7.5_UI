@@ -12,7 +12,9 @@ import {
   getAllTeams,
   sendInvite,
   acceptInvite,
-  checkAnswer
+  checkAnswer,
+  pushInvite,
+  pushTeam,
 } from "../graphql";
 import {
   apolloClient
@@ -314,6 +316,58 @@ const store = new Vuex.Store({
       } catch (error) {
         console.log(error)
       }
+    },
+    PUSH_INVITE: async ({
+      commit
+    }, teamId) => {
+      try {
+        const res = apolloClient.subscribe({
+          query: pushInvite,
+          variables: {
+            teamId
+          }
+        })
+
+        res.subscribe({
+          next(data) {
+            console.log("PUSHINVITE", data)
+            commit("PUSH_INVITE", data)
+          },
+          error(err) {
+            console.log("ERROR", err)
+          }
+        })
+
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    PUSH_TEAM: ({
+      commit
+    }, playerId) => {
+      try {
+        const res = apolloClient.subscribe({
+          query: pushTeam,
+          variables: {
+            playerId
+          }
+
+
+        })
+        res.subscribe({
+          next(data) {
+            console.log("ACCEPT", data)
+            commit("PUSH_TEAM", data.data.pushTeam.team)
+          },
+          error(error) {
+            console.log(error)
+          }
+        })
+
+
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
   mutations: {
@@ -386,6 +440,9 @@ const store = new Vuex.Store({
     },
     SEND_INVITE: (state, payload) => {
       state.inviteMsg = payload;
+      setTimeout(() => {
+        state.inviteMsg = null
+      }, 3000)
     },
     REMOVE_INVITE_MSG: state => {
       state.inviteMsg = null;
@@ -406,6 +463,18 @@ const store = new Vuex.Store({
       setTimeout(() => {
         state.answerMsg = null
       }, 3000)
+    },
+    PUSH_INVITE: (state, payload) => {
+      console.log("HERE")
+      console.log('PUSHED_INVITE', payload)
+      state.invitations = [...state.invitations, {
+        ...payload.data.pushInvite.invite
+      }]
+    },
+    PUSH_TEAM: (state, payload) => {
+      state.team = payload
+      state.invitations = payload.invitations
+      state.user.group = payload.id
     }
   }
 });

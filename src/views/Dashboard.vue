@@ -173,7 +173,13 @@ export default {
     }
 
     if (this.$store.getters.user.group !== null) {
+      console.log("HERE1");
+      this.$store.dispatch("PUSH_INVITE", this.$store.getters.user.group);
       await this.$store.dispatch("GET_LEVELS");
+    }
+    if (this.$store.getters.user.group === null) {
+      console.log("PT");
+      this.$store.dispatch("PUSH_TEAM", this.$store.getters.user.id);
     }
     if (this.$store.getters.user.group !== null) {
       await this.$store.dispatch("GET_GAME_TEAM", {

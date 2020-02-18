@@ -33,7 +33,12 @@
             <br />
             <input type="text" v-model="uniqueKey" required />
           </div>
-          <button class="m-b" type="submite">Create Team</button>
+          <div v-if="creating">
+            <p>Creating your team.Please wait..</p>
+          </div>
+          <div v-else>
+            <button class="m-b" type="submite">Create Team</button>
+          </div>
         </form>
       </div>
     </div>
@@ -109,7 +114,8 @@ export default {
       uniqueKey: "",
       bio: "",
       image: "1",
-      Invitations: this.$store.getters.invitations
+      Invitations: this.$store.getters.invitations,
+      creating: false
     };
   },
   props: ["loading"],
@@ -165,18 +171,20 @@ export default {
     getImageUrl(value) {
       return require(`../images/avatars/${value}.png`);
     },
-    createTeam() {
+    async createTeam() {
+      this.creating = true;
       const payload = {
         teamName: this.teamName,
         image: this.image,
         uniqueKey: this.uniqueKey,
         bio: this.bio
       };
-      this.$store.dispatch("CREATE_TEAM", payload);
+      await this.$store.dispatch("CREATE_TEAM", payload);
       this.teamName = "";
       this.uniqueKey = "";
       this.bio = "";
       this.image = "";
+      this.creating = false;
     },
     acceptInvite(inviteId, playerId) {
       this.$store.dispatch("ACCEPT_INVITE", {

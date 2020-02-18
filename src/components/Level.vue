@@ -4,14 +4,16 @@
       <p>{{answerMsg}}</p>
     </div>
     <h1 v-if="loading">Loading...</h1>
-    <h1 v-else>Level {{index}}</h1>
-    <div class="level-container">
-      <div>{{leveldata.data}}</div>
-      <input type="text" v-model="answer" required />
-      <br />
-      <div v-if="checking">Checking...</div>
-      <div v-else>
-        <button @click="checkAnswer">Submit →</button>
+    <div v-else>
+      <h1>Level {{index}}</h1>
+      <div class="level-container">
+        <div>{{leveldata.data}}</div>
+        <input type="text" v-model="answer" required />
+        <br />
+        <div v-if="checking">Checking...</div>
+        <div v-else>
+          <button @click="checkAnswer">Submit →</button>
+        </div>
       </div>
     </div>
   </div>
