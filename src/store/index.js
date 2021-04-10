@@ -19,14 +19,13 @@ import {
 import {
   apolloClient
 } from "../main";
-import config from "../config.json";
 import jwt from "jsonwebtoken";
 
 Vue.use(Vuex);
 
 const token = localStorage.getItem("nara$obscura") ? localStorage.getItem("nara$obscura") : null;
 
-const tokenData = token ? jwt.verify(token, config.JWTKEY) : null;
+const tokenData = token ? jwt.verify(token, process.env.VUE_APP_JWTS) : null;
 
 const firstTime = tokenData ? tokenData.firstTime : null;
 
@@ -373,7 +372,7 @@ const store = new Vuex.Store({
   mutations: {
     AUTH: (state, payload) => {
       localStorage.setItem("nara$obscura", payload);
-      const tokenData = jwt.verify(payload, config.JWTKEY);
+      const tokenData = jwt.verify(payload, process.env.VUE_APP_JWTS);
       state.token = payload;
       state.isAuth = true;
       console.log("AUTH FS", tokenData.firstTime);

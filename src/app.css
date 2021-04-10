@@ -333,7 +333,13 @@ input:invalid {
 .m-b {
   margin-bottom: 60px;
 }
+.center-win{
+  position: absolute;
+  top: 50%;
+  left: 52%;
+  transform: translate(-50%,-50%);
 
+}
 .text-mobile {
   font-size: 1.5em;
   width: 90%;

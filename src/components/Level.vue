@@ -7,7 +7,7 @@
     <div v-else>
       <h1>Level {{index}}</h1>
       <div class="level-container">
-        <div>{{leveldata.data}}</div>
+        <div><img :src="leveldata.data" /></div>
         <input type="text" v-model="answer" required />
         <br />
         <div v-if="checking">Checking...</div>

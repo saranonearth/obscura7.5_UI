@@ -10,20 +10,20 @@
 </template>
 
 <script>
-import config from "../config.json";
+
 export default {
   name: "EnterGameButton",
   data() {
     return {
       googleSignInParams: {
-        client_id: config.GKEY
+        client_id: process.env.VUE_APP_GKEY
       }
     };
   },
   methods: {
     onSignInSuccess(googleUser) {
       console.log(googleUser);
-      const token = googleUser.uc.id_token;
+      const token = googleUser.tc.id_token;
       this.$store.dispatch("AUTH", token);
     },
     onSignInError(error) {

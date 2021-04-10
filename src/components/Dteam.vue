@@ -179,6 +179,8 @@ export default {
         uniqueKey: this.uniqueKey,
         bio: this.bio
       };
+
+      console.log(payload)
       await this.$store.dispatch("CREATE_TEAM", payload);
       this.teamName = "";
       this.uniqueKey = "";

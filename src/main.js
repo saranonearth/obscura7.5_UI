@@ -16,10 +16,10 @@ import { getMainDefinition } from "apollo-utilities";
 Vue.config.productionTip = false;
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/"
+  uri: process.env.VUE_APP_API_URL
 });
 const wslink = new WebSocketLink({
-  uri: "ws://localhost:4000/graphql",
+  uri: process.env.VUE_APP_WS_URL,
 
   options: {
     reconnect: true,

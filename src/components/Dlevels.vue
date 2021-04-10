@@ -11,6 +11,9 @@
       <div v-if="isNoTeam">
         <h2>You need to be in a team to play.</h2>
       </div>
+       <div v-else-if="isDone" class="center-win">
+        <h2>You have finished the game🔥🎉</h2>
+      </div>
       <div v-else class="levels-container">
         <div
           @click="handleClick(level,index)"
@@ -32,24 +35,30 @@ export default {
   data() {
     return {
       Levels: [],
-      isNoTeam: this.$store.getters.user.group ? false : true
+      isNoTeam: this.$store.getters.user.group ? false : true,
     };
   },
   computed: {
     levels() {
       return this.$store.getters.levels;
-    }
+    },
   },
   watch: {
     levels(values) {
       this.Levels = values;
-      console.log(this.levels);
-    }
+    },
   },
   methods: {
     handleClick(leveldata, index) {
       this.$emit("level-selected", { leveldata, index });
-    }
+    },
+    isDone() {
+      const LevelData = this.$store.getters.levelData;
+      const index = this.levels.length-1;
+
+      return LevelData[index].data==="dang";
+
+      }
   }
 };
 </script>

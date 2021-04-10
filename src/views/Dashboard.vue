@@ -99,7 +99,7 @@
           <div class="home-footer">
             <div class="footer-content">
               Developed by
-              <span class="gawds">gawds</span>
+              <span class="gawds">gawds</span> x saranonearth
             </div>
           </div>
         </div>
