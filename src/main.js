@@ -24,7 +24,7 @@ const wslink = new WebSocketLink({
   options: {
     reconnect: true,
 
-    timeout: 30000
+    timeout: 50000
   }
 });
 const authMiddleware = new ApolloLink((operation, forward) => {
